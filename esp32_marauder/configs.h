@@ -28,7 +28,7 @@
 
   //// HARDWARE NAMES
   #ifdef MARAUDER_M5STICKC
-    #define HARDWARE_NAME "M5Stick-C Plus"
+    #define HARDWARE_NAME "T-display Lilygo"
   #elif defined(MARAUDER_MINI)
     #define HARDWARE_NAME "Marauder Mini"
   #elif defined(MARAUDER_V4)

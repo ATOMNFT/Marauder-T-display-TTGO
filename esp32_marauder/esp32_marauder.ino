@@ -229,9 +229,9 @@ void setup()
   // Draw the title screen
   #ifdef HAS_SCREEN
     #ifndef MARAUDER_MINI
-      display_obj.drawJpeg("/marauder3L.jpg", 0 , 0);     // 240 x 320 image
+      display_obj.drawJpeg("/marauder3L.jpg", 0 , -80);     // 240 x 320 image
     #else
-      display_obj.drawJpeg("/marauder3L.jpg", 0, 0);
+      display_obj.drawJpeg("/marauder3L.jpg", 0, -80);
     #endif
   #endif
 

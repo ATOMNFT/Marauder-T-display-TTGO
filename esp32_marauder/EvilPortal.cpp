@@ -1,5 +1,8 @@
 #include "EvilPortal.h"
 
+
+
+
 AsyncWebServer server(80);
 
 EvilPortal::EvilPortal() {
@@ -18,7 +21,7 @@ void EvilPortal::setup() {
 
   #ifdef HAS_SD
     if (sd_obj.supported) {
-      sd_obj.listDirToLinkedList(html_files, "/", "html");
+      SPIFFS.open("/index.html",FILE_READ);
 
       Serial.println("Evil Portal Found " + (String)html_files->size() + " HTML files");
     }
@@ -93,7 +96,7 @@ bool EvilPortal::setHtml() {
   }
   Serial.println("Setting HTML...");
   #ifndef WRITE_PACKETS_SERIAL
-    File html_file = sd_obj.getFile("/" + this->target_html_name);
+    File html_file = SPIFFS.open("/index.html" ,FILE_READ);
     if (!html_file) {
       #ifdef HAS_SCREEN
         this->sendToDisplay("Could not find /" + this->target_html_name);
@@ -144,7 +147,7 @@ bool EvilPortal::setAP(LinkedList<ssid>* ssids, LinkedList<AccessPoint>* access_
   // This means the file is last resort
   if ((ssids->size() <= 0) && (temp_ap_name == "")) {
     #ifndef WRITE_PACKETS_SERIAL
-      File ap_config_file = sd_obj.getFile("/ap.config.txt");
+      File ap_config_file = SPIFFS.open("/ap.config.txt", FILE_READ);
       // Could not open config file. return false
       if (!ap_config_file) {
         #ifdef HAS_SCREEN
@@ -167,19 +170,13 @@ bool EvilPortal::setAP(LinkedList<ssid>* ssids, LinkedList<AccessPoint>* access_
           return false;
         }
         // AP name length good. Read from file into var
-        while (ap_config_file.available()) {
-          char c = ap_config_file.read();
-          Serial.print(c);
-          if (isPrintable(c)) {
-            ap_config.concat(c);
-          }
-        }
+        ap_config = "Free WIFI";
+        
         #ifdef HAS_SCREEN
           this->sendToDisplay("AP name from config file");
           this->sendToDisplay("AP name: " + ap_config);
         #endif
         Serial.println("AP name from config file: " + ap_config);
-        ap_config_file.close();
       }
     #else
       return false;
@@ -187,24 +184,7 @@ bool EvilPortal::setAP(LinkedList<ssid>* ssids, LinkedList<AccessPoint>* access_
   }
   // There are SSIDs in the list but there could also be an AP selected
   // Priority is SSID list before AP selected and config file
-  else if (ssids->size() > 0) {
-    ap_config = ssids->get(0).essid;
-    if (ap_config.length() > MAX_AP_NAME_SIZE) {
-      #ifdef HAS_SCREEN
-        this->sendToDisplay("The given AP name is too large.");
-        this->sendToDisplay("The Byte limit is " + (String)MAX_AP_NAME_SIZE);
-        this->sendToDisplay("Touch to exit...");
-      #endif
-      Serial.println("The provided AP name is too large. Byte limit is " + (String)MAX_AP_NAME_SIZE + "\nUse stopscan...");
-      return false;
-    }
-    #ifdef HAS_SCREEN
-      this->sendToDisplay("AP name from SSID list");
-      this->sendToDisplay("AP name: " + ap_config);
-    #endif
-    Serial.println("AP name from SSID list: " + ap_config);
-  }
-  else if (temp_ap_name != "") {
+    else if (temp_ap_name != "") {
     if (temp_ap_name.length() > MAX_AP_NAME_SIZE) {
       #ifdef HAS_SCREEN
         this->sendToDisplay("The given AP name is too large.");
@@ -222,6 +202,27 @@ bool EvilPortal::setAP(LinkedList<ssid>* ssids, LinkedList<AccessPoint>* access_
       Serial.println("AP name from AP list: " + ap_config);
     }
   }
+
+
+  
+  else if (ssids->size() > 0) {
+    ap_config = ssids->get(0).essid;
+    if (ap_config.length() > MAX_AP_NAME_SIZE) {
+      #ifdef HAS_SCREEN
+        this->sendToDisplay("The given AP name is too large.");
+        this->sendToDisplay("The Byte limit is " + (String)MAX_AP_NAME_SIZE);
+        this->sendToDisplay("Touch to exit...");
+      #endif
+      Serial.println("The provided AP name is too large. Byte limit is " + (String)MAX_AP_NAME_SIZE + "\nUse stopscan...");
+      return false;
+    }
+    #ifdef HAS_SCREEN
+      this->sendToDisplay("AP name from SSID list");
+      this->sendToDisplay("AP name: " + ap_config);
+    #endif
+    Serial.println("AP name from SSID list: " + ap_config);
+  }
+
   else {
     Serial.println("Could not configure Access Point. Use stopscan...");
     #ifdef HAS_SCREEN
