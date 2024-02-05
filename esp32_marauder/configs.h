@@ -230,10 +230,10 @@
     #endif
 
     #ifdef MARAUDER_M5STICKC
-      #define L_BTN 0
+      #define L_BTN -1
       #define C_BTN 35
-      #define U_BTN 35
-      #define R_BTN 35
+      #define U_BTN -1
+      #define R_BTN -1
       #define D_BTN 0
     #endif
 
