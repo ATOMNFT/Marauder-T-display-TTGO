@@ -40,7 +40,7 @@ void setup(void) {
   }
   if (calDataOK) {
     // calibration data valid
-    tft.setTouch(calibrationData);
+    //tft.setTouch(calibrationData);
   } else {
     // data not valid. recalibrate
     tft.calibrateTouch(calibrationData, TFT_WHITE, TFT_RED, 15);

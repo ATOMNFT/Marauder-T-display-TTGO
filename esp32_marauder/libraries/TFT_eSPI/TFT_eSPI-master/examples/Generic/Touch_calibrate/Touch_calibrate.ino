@@ -29,7 +29,7 @@ void setup() {
   // Replace above line with the code sent to Serial Monitor
   // once calibration is complete, e.g.:
   uint16_t calData[5] = { 286, 3534, 283, 3600, 6 };
-  tft.setTouch(calData);
+  //tft.setTouch(calData);
 */
 
   // Clear the screen

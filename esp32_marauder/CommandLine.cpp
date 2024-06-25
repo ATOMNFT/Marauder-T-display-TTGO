@@ -9,9 +9,6 @@ void CommandLine::RunSetup() {
   Serial.println(F("\n\n--------------------------------\n"));
   Serial.println(F("         ESP32 Marauder      \n"));
   Serial.println("            " + version_number + "\n");
-  #ifdef WRITE_PACKETS_SERIAL
-    Serial.println(F("           >> Serial      \n"));
-  #endif
   Serial.println(F("       By: justcallmekoko\n"));
   Serial.println(F("--------------------------------\n\n"));
   
@@ -248,6 +245,8 @@ void CommandLine::runCommand(String input) {
     Serial.println(HELP_SEL_CMD_A);
     Serial.println(HELP_SSID_CMD_A);
     Serial.println(HELP_SSID_CMD_B);
+    Serial.println(HELP_SAVE_CMD);
+    Serial.println(HELP_LOAD_CMD);
     
     // Bluetooth sniff/scan
     #ifdef HAS_BT
@@ -508,6 +507,9 @@ void CommandLine::runCommand(String input) {
 
   //// WiFi/Bluetooth Scan/Attack commands
   if (!wifi_scan_obj.scanning()) {
+    // Dump pcap/log to serial too, valid for all scan/attack commands
+    wifi_scan_obj.save_serial = this->argSearch(&cmd_args, "-serial") != -1;
+
     // Signal strength scan
     if (cmd_args.get(0) == SIGSTREN_CMD) {
       Serial.println("Starting Signal Strength Scan. Stop with " + (String)STOPSCAN_CMD);
@@ -1035,21 +1037,17 @@ void CommandLine::runCommand(String input) {
       //}
       // Update via SD
       if (sd_sw != -1) {
-      #ifdef HAS_SD
-          #ifndef WRITE_PACKETS_SERIAL
-            if (!sd_obj.supported) {
-              Serial.println("SD card is not connected. Cannot perform SD Update");
-              return;
-            }
-            wifi_scan_obj.currentScanMode = OTA_UPDATE;
-            sd_obj.runUpdate();
-          #else
-            Serial.println("SD card not initialized. Cannot perform SD Update");
-          #endif
-      #else
-        Serial.println("SD card support disabled. Cannot perform SD Update");
-        return;
-      #endif
+        #ifdef HAS_SD
+          if (!sd_obj.supported) {
+            Serial.println("SD card is not connected. Cannot perform SD Update");
+            return;
+          }
+          wifi_scan_obj.currentScanMode = OTA_UPDATE;
+          sd_obj.runUpdate();
+        #else
+          Serial.println("SD card support disabled. Cannot perform SD Update");
+          return;
+        #endif
       }
     }
   }
@@ -1266,6 +1264,41 @@ void CommandLine::runCommand(String input) {
       return;
     }
   }
+  else if (cmd_args.get(0) == SAVE_CMD) {
+    int ap_sw = this->argSearch(&cmd_args, "-a");
+    int st_sw = this->argSearch(&cmd_args, "-s");
+
+    if (ap_sw != -1) {
+      #ifdef HAS_SCREEN
+        menu_function_obj.changeMenu(&menu_function_obj.saveAPsMenu);
+      #endif
+      wifi_scan_obj.RunSaveAPList(true);
+    }
+    else if (st_sw != -1) {
+      #ifdef HAS_SCREEN
+        menu_function_obj.changeMenu(&menu_function_obj.saveSSIDsMenu);
+      #endif
+      wifi_scan_obj.RunSaveSSIDList(true);
+    }
+  }
+  else if (cmd_args.get(0) == LOAD_CMD) {
+    int ap_sw = this->argSearch(&cmd_args, "-a");
+    int st_sw = this->argSearch(&cmd_args, "-s");
+
+    if (ap_sw != -1) {
+      #ifdef HAS_SCREEN
+        menu_function_obj.changeMenu(&menu_function_obj.loadAPsMenu);
+      #endif
+      wifi_scan_obj.RunLoadAPList();
+    }
+    else if (st_sw != -1) {
+      #ifdef HAS_SCREEN
+        menu_function_obj.changeMenu(&menu_function_obj.loadSSIDsMenu);
+      #endif
+      wifi_scan_obj.RunLoadSSIDList();
+    }
+  }
+
   // SSID stuff
   else if (cmd_args.get(0) == SSID_CMD) {
     int add_sw = this->argSearch(&cmd_args, "-a");

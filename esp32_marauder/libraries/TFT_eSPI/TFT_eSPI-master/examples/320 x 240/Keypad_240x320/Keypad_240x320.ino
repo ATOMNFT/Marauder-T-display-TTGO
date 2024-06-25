@@ -234,7 +234,7 @@ void touch_calibrate()
 
   if (calDataOK && !REPEAT_CAL) {
     // calibration data valid
-    tft.setTouch(calData);
+    //tft.setTouch(calData);
   } else {
     // data not valid so recalibrate
     tft.fillScreen(TFT_BLACK);

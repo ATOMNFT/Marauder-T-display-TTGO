@@ -10,6 +10,7 @@
 #define CGRAM_OFFSET      // Library will add offsets required
 
 //#define TFT_MISO -1
+#define TOUCH_CS -1
 
 #define TFT_MOSI            19
 #define TFT_SCLK            18
