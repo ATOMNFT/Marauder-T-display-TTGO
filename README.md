@@ -5,7 +5,7 @@
 
 <div align="center">
 
-## 13.10 NOT FULLY FUNCTIONAL 
+## TTGO T-Display1.14in v13.10 NOT FULLY FUNCTIONAL 
 
 </div>
 
