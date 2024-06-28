@@ -10,6 +10,8 @@ The bin files located in this repo are for 13.6 marauder which is fully function
 
 </div>
 
+---
+
 # ESP32 Marauder
 <p align="center"><img alt="Marauder logo" src="https://github.com/justcallmekoko/ESP32Marauder/blob/master/pictures/marauder3L.jpg?raw=true" width="300"></p>
 <p align="center">
