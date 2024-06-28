@@ -6,7 +6,7 @@
 <div align="center">
 
 ## TTGO T-Display1.14in v13.10 NOT FULLY FUNCTIONAL 
-The bin files located in this repo are for 13.6 marauder which is fully functional. the sketch files are for 13.10 marauder which flashes fine but is having button issues. I'm still trying to solve the button and will updates as soon I find a fix.
+The bin files located in this repo are for 13.6 marauder which is fully functional. The sketch files are for 13.10 marauder which flashes fine but is having button issues. I'm still trying to solve the button issue/s and will push updates as soon I find a fix.
 
 </div>
 
