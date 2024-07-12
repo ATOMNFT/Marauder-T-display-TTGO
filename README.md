@@ -13,6 +13,8 @@ Use the provided User_setup files to compile in Arduino. (Backup current User_se
 </div>
 
 ---
+<details>
+<summary><h2>ESP32 Marauder Info</h2></summary>
 
 # ESP32 Marauder
 <p align="center"><img alt="Marauder logo" src="https://github.com/justcallmekoko/ESP32Marauder/blob/master/pictures/marauder3L.jpg?raw=true" width="300"></p>
@@ -38,3 +40,5 @@ Check out the project [wiki](https://github.com/justcallmekoko/ESP32Marauder/wik
 
 # For Sale Now
 You can buy the ESP32 Marauder using [this link](https://www.tindie.com/products/justcallmekoko/esp32-marauder/)
+
+</details>
