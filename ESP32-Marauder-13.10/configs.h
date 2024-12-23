@@ -261,7 +261,7 @@
     #endif
 
 ///////////////////////////////// Used for T-display
-    #ifdef MARAUDER_M5STICKC 
+    #ifdef MARAUDER_M5STICKC
       #define L_BTN -1
       #define C_BTN 35
       #define U_BTN -1
@@ -271,14 +271,14 @@
       //#define HAS_L
       //#define HAS_R
       //#define HAS_U
-      #define HAS_C
       #define HAS_D
+      #define HAS_C
 
-      #define L_PULL true
+      // //#define L_PULL false
       #define C_PULL true
-      #define U_PULL true
-      #define R_PULL true
-      #define D_PULL false
+      // //#define U_PULL true
+      // //#define R_PULL true
+      #define D_PULL true
     #endif
 ///////////////////////////////// Used for T-display
 
