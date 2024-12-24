@@ -5,10 +5,48 @@
 
 <div align="left">
 
-## TTGO T-Display 1.14in v13.10 NOT FULLY FUNCTIONAL 
-The bin files located in this repo are for 13.6 marauder which is fully functional. The sketch files are for (Fully Functional 13.6) & (Non Functional 13.10 which flashes fine but is having button issues).  I'm still trying to solve the button issue/s and will push updates as soon I find a fix.
 
-Use the provided User_setup files to compile in Arduino. (Backup current User_setup files before adding these from this repo)
+## ⬆ TTGO T-Display 1.14in Update Highlights 12/23/24 ⬆ <br> Added New v1.2.0!
+  
+| Feature/Update                             | Description/Notes                                                                                                                                                        |
+|--------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| • Added logging to SD for Flipper/AirTag sniff | Thanks to Fr4nkFletcher                                                                                                                                               |
+| • Added Pcap capture of flipper data       | WIP as the pcap is malformed
+| • Add support for Adafruit MAX17048 battery monitor       |
+| • Added Flipper Zero Sniff                 |                                                                                                                                         |
+| • Update Save/Load Files menu to add for saving and loading AirTags                 |                                                                                                                                                                        |
+| • Airtag Sniffing/Spoofing                 |                                                                                                                                                                        |                                                                                                                                                                     |
+| • Flipper BLE Spam                         |                                                                                                                                                                        |
+| • Wardriving Menu added                    |                                                                                                                                                                        |                                                                                                                                                 |                                                                                                                                                                   |                                                                                                                                               |
+| • Evil Portal storage adjustment           | Moves all portals into a folder instead of root of SD card                                                                                                            |
+
+---
+
+<b>For more of the changes and additions to marauder, head over <a href=https://github.com/justcallmekoko/ESP32Marauder/releases/tag/v1.1.0>HERE</a> And read more</b>
+
+<br>
+
+<b>A beautiful fork of wifi Marauder, a suite of WiFi/Bluetooth offensive and defensive tools for the TTGO T-Display.</b>
+<b>This fork features a few great fixes and customzations.</b>
+
+<hr>
+<br>
+  
+> ## 🛠️ **Device Compatibility**
+> 
+> Successfully tested on:
+> - [T-display variant 1](https://a.co/d/aH2SvRw)  
+> - [T-display variant 2](https://a.co/d/eFvFgLy)  
+
+<hr>
+
+## ⚡ **Web Flasher**
+Use the link below to flash with the new web flashe tool!
+<a href=https://atomnft.github.io/Marauder-T-display-TTGO/flash0.html>smoochiee</a>
+
+
+## ⚙️ **compiling in Arduino**
+Use the provided User_setup files if compiling in Arduino. (Backup current User_setup files before adding these from this repo)
 
 </div>
 
