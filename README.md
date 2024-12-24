@@ -24,12 +24,14 @@
 
 <br>
 
-<b>A beautiful fork of wifi Marauder, a suite of WiFi/Bluetooth offensive and defensive tools for the TTGO T-Display.</b>
-<b>This fork features a few great fixes and customzations.</b>
+📡 TTGO T-Display WiFi Marauder Fork 🚀
+A stunning fork of the WiFi Marauder suite, optimized for the TTGO T-Display!
+This version introduces exciting new features, bug fixes, and customizations for WiFi/Bluetooth offensive and defensive tasks. Perfect for hobbyists and security enthusiasts!
+<br>
+Take your TTGO T-Display to the next level with these powerful updates! Contributions and feedback are welcome. 🎉
 
 <hr>
-<br>
-  
+
 > ## 🛠️ **Device Compatibility**
 > 
 > Successfully tested on:
