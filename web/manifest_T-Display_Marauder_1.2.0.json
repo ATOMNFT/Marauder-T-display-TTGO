@@ -1,13 +1,13 @@
 {
-  "name": "T-Display Marauder v0.13.10",
+  "name": "T-Display Marauder v1.2.0",
   "builds": [
     {
       "chipFamily": "ESP32",
       "improv": false,
       "parts": [
-        { "path": "T-Display_Marauder_0.13.10.ino.bootloader.bin", "offset": 4096 },
-        { "path": "T-Display_Marauder_0.13.10.ino.partitions.bin", "offset": 32768 },
-        { "path": "T-Display_Marauder_0.13.10.ino.bin", "offset": 65536 }
+        { "path": "T-Display_Marauder_1.2.0.ino.bootloader.bin", "offset": 4096 },
+        { "path": "T-Display_Marauder_1.2.0.ino.partitions.bin", "offset": 32768 },
+        { "path": "T-Display_Marauder_1.2.0.ino.bin", "offset": 65536 }
       ]
     },
     {
