@@ -22,8 +22,6 @@
 
 ---
 
-<b>For more of the changes and additions to marauder, head over <a href=https://github.com/justcallmekoko/ESP32Marauder/releases/tag/v1.1.0>HERE</a> And read more</b>
-
 <br>
 
 <b>A beautiful fork of wifi Marauder, a suite of WiFi/Bluetooth offensive and defensive tools for the TTGO T-Display.</b>
