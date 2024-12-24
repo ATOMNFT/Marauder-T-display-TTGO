@@ -42,7 +42,8 @@
 
 ## ⚡ **Web Flasher**
 Use the link below to flash with the new web flashe tool!
-<a href=https://atomnft.github.io/Marauder-T-display-TTGO/flash0.html>smoochiee</a>
+<br>
+<a href=https://atomnft.github.io/Marauder-T-display-TTGO/flash0.html>Web Flasher Tool</a>
 
 
 ## ⚙️ **compiling in Arduino**
