@@ -3,7 +3,7 @@
 
 <div align="center" style="max-width: 100%; overflow: visible;">
   <img 
-    src="https://github.com/ATOMNFT/Marauder-T-display-TTGO/tree/main/Images/Repolike.svg" 
+    src="https://github.com/ATOMNFT/Marauder-T-display-TTGO/blob/main/Images/Repolike.svg" 
     style="width: 100%; height: 110px; max-width: 800px;" 
     alt="Responsive SVG">
 </div>
