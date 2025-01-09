@@ -42,7 +42,7 @@ Take your TTGO T-Display to the next level with these powerful updates! Contribu
   along with all the pcaps and other files captured.</b>
   
   ### SD Setup for T-Display
-  If you flashed from the <a href=https://atomnft.github.io/Marauder-T-display-TTGO/flash0.html>Marauder T-display flash tool</a> or built from <a href=https://github.com/ATOMNFT/Marauder-T-display-TTGO>Marauder T-display</a> then You must create a folder titled "portals" or drop the "portals" folder in this repo on the root of your sd card. This is where you will store the <a href=https://github.com/ATOMNFT/CYD-ESP32Marauder/tree/master/Evil%20Portal%20Stuff>Evil Portal html files</a> along with the index.html file.
+  If you flashed from the <a href=https://atomnft.github.io/Marauder-T-display-TTGO/flash0.html>Marauder T-display flash tool</a> or built from <a href=https://github.com/ATOMNFT/Marauder-T-display-TTGO>Marauder T-display</a> then you must create a folder titled "portals" or drop the "portals" folder in this repo on the root of your sd card. This is where you will store the <a href=https://github.com/ATOMNFT/CYD-ESP32Marauder/tree/master/Evil%20Portal%20Stuff>Evil Portal html files</a> along with the index.html file.
   
   <br>
  
