@@ -35,9 +35,26 @@ This version introduces exciting new features, bug fixes, and customizations for
 <br>
 Take your TTGO T-Display to the next level with these powerful updates! Contributions and feedback are welcome. 🎉
 
+# 🛠️ **SD Portal fix**
+
+  ### Adjusted sd card portal storage
+  <b>I have tweaked a section of two files (EvilPortal.cpp & SDInterface.h) to allow the portals used in EP to be stored in a folder on the sd card instead of just being stored in the root of sd card
+  along with all the pcaps and other files captured.</b>
+  
+  ### SD Setup for T-Display
+  If you flashed from the <a href=https://atomnft.github.io/Marauder-T-display-TTGO/flash0.html>Marauder T-display flash tool</a> or built from <a href=https://github.com/ATOMNFT/Marauder-T-display-TTGO>Marauder T-display</a> then You must create a folder on the root of your sd card titled "portals". This is where you will store the <a href=https://github.com/ATOMNFT/CYD-ESP32Marauder/tree/master/Evil%20Portal%20Stuff>Evil Portal html files</a> along with the index.html file.
+  
+  <br>
+ 
+  <b>The folder titled "portals is to be added to the root of your sd card. It contains the ap.config file, a file titled "index.html", and a few smaller sized portals. Download the zip file and unzip it. Drag or copy/paste the folder titled "portals" to the root of your sd card. </b>
+  
+  <br>
+  
+  <b>The sd adjustment/fix is already included in <a href=https://github.com/ATOMNFT/Marauder-T-display-TTGO> this sketch for the CYD.</a>  if you plan to build from source</b>
+
 <hr>
 
-> ## 🛠️ **Device Compatibility**
+> # 🛠️ **Device Compatibility**
 > 
 > Successfully tested on:
 > - [T-display variant 1](https://a.co/d/aH2SvRw)  
@@ -45,13 +62,13 @@ Take your TTGO T-Display to the next level with these powerful updates! Contribu
 
 <hr>
 
-## ⚡ **Web Flasher**
+# ⚡ **Web Flasher**
 Use the link below to flash with the new web flasher tool!
 <br>
 <a href=https://atomnft.github.io/Marauder-T-display-TTGO/flash0.html>Web Flasher Tool</a>
 
 
-## ⚙️ **compiling in Arduino**
+# ⚙️ **compiling in Arduino**
 Use the provided User_setup files if compiling in Arduino. (Backup current User_setup files before adding these from this repo)
 
 </div>
@@ -77,7 +94,7 @@ Use the provided User_setup files if compiling in Arduino. (Backup current User_
   <a href="https://www.twitch.tv/willstunforfood"><img src="https://assets.stickpng.com/images/580b57fcd9996e24bc43c540.png" alt="Twitch WillStunForFood" width="200"></a>
 </p>
     
-## Getting Started
+# Getting Started
 Download the [latest release](https://github.com/justcallmekoko/ESP32Marauder/releases/latest) of the firmware.  
 
 Check out the project [wiki](https://github.com/justcallmekoko/ESP32Marauder/wiki) for a full overview of the ESP32 Marauder
