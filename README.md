@@ -50,7 +50,7 @@ Take your TTGO T-Display to the next level with these powerful updates! Contribu
   
   <br>
   
-  <b>The sd adjustment/fix is already included in <a href=https://github.com/ATOMNFT/Marauder-T-display-TTGO> this sketch for the CYD.</a>  if you plan to build from source</b>
+  <b>The sd adjustment/fix is already included in <a href=https://github.com/ATOMNFT/Marauder-T-display-TTGO> this sketch for the T-Display.</a>  if you plan to build from source</b>
 
 <hr>
 
