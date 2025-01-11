@@ -42,6 +42,8 @@ You MUST install this version of NimBLE <a href=https://github.com/h2zero/NimBLE
 <br>
 The other libraries needed can be located <a href=https://github.com/justcallmekoko/ESP32Marauder/wiki/installing-firmware-from-source#installing-firmware-from-source>HERE</a> 
 
+---
+
 # 🛠️ **SD Portal fix**
 
   ### Adjusted sd card portal storage
