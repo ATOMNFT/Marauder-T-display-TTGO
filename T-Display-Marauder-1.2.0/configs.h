@@ -248,14 +248,6 @@
   #endif
   //// END FLIPPER ZERO HAT SETTINGS
 
-  //// POWER MANAGEMENT
-  #ifdef HAS_PWR_MGMT
-    #ifdef MARAUDER_M5STICKC
-      #include "AXP192.h"
-    #endif
-  #endif
-  //// END POWER MANAGEMENT
-
   //// BUTTON DEFINITIONS
   #ifdef HAS_BUTTONS
 
@@ -996,7 +988,7 @@
 
  /////////////////////////////////////////// Used for T-Display
     #ifdef MARAUDER_M5STICKC    
-      #define SD_CS 5
+      #define SD_CS 33
     #endif
  /////////////////////////////////////////// Used for T-Display
 
@@ -1089,15 +1081,6 @@
   
   #endif
   //// END NEOPIXEL STUFF
-
-  //// BOARD PIN OVERRIDES
-  #ifdef XIAO_ESP32_S3
-    #ifdef USE_FLIPPER_SD
-      #define XIAO_RX1 1
-      #define XIAO_TX1 2
-    #endif
-  #endif
-  //// END BOARD PIN OVERRIDES
 
   //// EVIL PORTAL STUFF
   #ifdef MARAUDER_M5STICKC

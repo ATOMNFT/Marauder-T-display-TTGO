@@ -178,7 +178,7 @@ class WiFiScan
 
     // Settings
     uint mac_history_cursor = 0;
-    uint8_t channel_hop_delay = 1;
+    uint8_t channel_hop_delay = 5;
     bool force_pmkid = false;
     bool force_probe = false;
     bool save_pcap = false;

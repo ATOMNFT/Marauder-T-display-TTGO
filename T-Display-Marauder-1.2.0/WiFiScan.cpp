@@ -5202,7 +5202,7 @@ void WiFiScan::main(uint32_t currentTime)
   (currentScanMode == WIFI_SCAN_STATION_WAR_DRIVE) ||
   (currentScanMode == WIFI_SCAN_ALL))
   {
-    if (currentTime - initTime >= this->channel_hop_delay * 1000)
+    if (currentTime - initTime >= this->channel_hop_delay * 5000)
     {
       initTime = millis();
       channelHop();
