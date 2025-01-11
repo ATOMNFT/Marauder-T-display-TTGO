@@ -44,6 +44,9 @@ The other libraries needed can be located <a href=https://github.com/justcallmek
 
 ---
 
+# User_Setup Files
+<a href=https://github.com/ATOMNFT/Marauder-T-display-TTGO/tree/main/User_Setups>THESE</a> files are to placed in the TFT_eSPI library folder. Make sure to back up your lib folder prior to replacing these files.
+
 # 🛠️ **SD Portal fix**
 
   ### Adjusted sd card portal storage
