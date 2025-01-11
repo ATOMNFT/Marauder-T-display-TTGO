@@ -51,6 +51,10 @@ Make sure to back up your TFT_eSPI lib folder prior to replacing these files.
 
 ---
 
+# SD Wiring Diagram
+Here is a simple pic to explain wiring up a micro SD module.
+![T-display-SD-Pin](Images/T-display-SD-Pin.png)
+
 # 🛠️ **SD Portal fix**
 
   ### Adjusted sd card portal storage
