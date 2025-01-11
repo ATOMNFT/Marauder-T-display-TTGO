@@ -81,10 +81,6 @@ Use the link below to flash with the new web flasher tool!
 <br>
 <a href=https://atomnft.github.io/Marauder-T-display-TTGO/flash0.html>Web Flasher Tool</a>
 
-
-# ⚙️ **compiling in Arduino**
-Use the provided User_setup files if compiling in Arduino. (Backup current User_setup files before adding these from this repo)
-
 </div>
 
 ---
