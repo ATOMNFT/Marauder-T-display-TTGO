@@ -47,7 +47,7 @@ The other libraries needed can be located <a href=https://github.com/justcallmek
 # ⚙️ User_Setup Files ⚙️
 <a href=https://github.com/ATOMNFT/Marauder-T-display-TTGO/tree/main/User_Setups>THESE</a> files are to be placed in the TFT_eSPI library folder if you plan to compile from the sketch files.
 <br> 
-Make sure to back up your lib folder prior to replacing these files.
+Make sure to back up your TFT_eSPI lib folder prior to replacing these files.
 
 ---
 
