@@ -56,11 +56,11 @@ The other libraries needed can be located <a href=https://github.com/justcallmek
   along with all the pcaps and other files captured.</b>
   
   ### SD Setup for T-Display
-  If you flashed from the <a href=https://atomnft.github.io/Marauder-T-display-TTGO/flash0.html>Marauder T-display flash tool</a> or built from <a href=https://github.com/ATOMNFT/Marauder-T-display-TTGO>Marauder T-display</a> then you must create a folder titled "portals" or drop the "portals" folder in this repo on the root of your sd card.
+  If you flashed from the <a href=https://atomnft.github.io/Marauder-T-display-TTGO/flash0.html>Marauder T-display flash tool</a> or built from <a href=https://github.com/ATOMNFT/Marauder-T-display-TTGO>Marauder T-display</a> then you must create a folder titled "portals" or drop the "portals" folder in this repo on the root of your sd card after unzipping it.
   
   <br>
  
-  <b>The folder titled "portals is to be added to the root of your sd card. It contains the ap.config file, a file titled "index.html", and a few smaller sized portals. Download the zip file and unzip it. Drag or copy/paste the folder titled "portals" to the root of your sd card. </b>
+  <b>The folder titled "portals is to be added to the root of your sd card. It contains the ap.config file, a file titled "index.html", and a few smaller sized portals. Download the 7z file and unzip it. Drag or copy/paste the folder titled "portals" to the root of your sd card. </b>
   
   <br>
   
