@@ -39,6 +39,7 @@ Take your TTGO T-Display to the next level with these powerful updates! Contribu
 
 # 📚 Libraries 📚
 You MUST install this version on NimBLE <a href=https://github.com/h2zero/NimBLE-Arduino/releases/tag/1.3.5>NimBLE 1.3.5</a>
+<br>
 The other libraries need can be located <a href=https://github.com/justcallmekoko/ESP32Marauder/wiki/installing-firmware-from-source#installing-firmware-from-source>HERE</a> 
 
 # 🛠️ **SD Portal fix**
