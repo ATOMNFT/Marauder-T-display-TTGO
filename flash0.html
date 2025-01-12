@@ -114,12 +114,6 @@
     </p>
   </center>
   <script>
-    document.getElementById('select-0.13.10').addEventListener('change', (event) => {
-      const button = document.querySelector('esp-web-install-button');
-      button.manifest = `web/manifest_${event.target.value}.json`;
-      button.classList.remove('invisible');
-    });
-
     document.getElementById('select-1.2.0').addEventListener('change', (event) => {
       const button = document.querySelector('esp-web-install-button');
       button.manifest = `web/manifest_${event.target.value}.json`;
