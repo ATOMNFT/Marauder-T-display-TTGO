@@ -23,9 +23,14 @@
 | • Airtag Sniffing/Spoofing                 |                                                                                                                                                                        |                                                                                                                                                                     |
 | • Flipper BLE Spam                         |                                                                                                                                                                        |
 | • Wardriving Menu added                    |                                                                                                                                                                        |                                                                                                                                                 |                                                                                                                                                                   |                                                                                                                                               |
-| • Evil Portal storage adjustment           | Moves all portals into a folder instead of root of SD card                                                                                                            |
+| • Evil Portal storage adjustment           | Moves all portals into a folder instead of root of SD card  
+| • Added Deep Sleep/off Mode  1/13/25       | Allows T-Display to be shutdown by putting the device into deep sleep                                                                                                           |
 
 ---
+
+## Fixes 1/13/25
+- Adjusted channel hop time back to 1 second.
+- Fixed EP not populating the portal on target after succesful connection. 
 
 <br>
 
