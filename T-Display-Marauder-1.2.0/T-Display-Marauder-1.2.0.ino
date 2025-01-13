@@ -84,6 +84,10 @@ Buffer buffer_obj;
 Settings settings_obj;
 CommandLine cli_obj;
 
+#define BUTTON_PIN D_BTN // Button 0 pin
+unsigned long buttonPressStart = 0; 
+bool buttonHeld = false;
+
 #ifdef HAS_GPS
 GpsInterface gps_obj;
 #endif
@@ -146,6 +150,8 @@ void backlightOff() {
 
 
 void setup() {
+	
+  pinMode(D_BTN, INPUT_PULLUP); // Configure button as input
 
 #ifdef HAS_SCREEN
   pinMode(TFT_BL, OUTPUT);
@@ -330,6 +336,23 @@ void setup() {
 
 
 void loop() {
+  static unsigned long buttonPressStart = 0; 
+  static bool buttonHeld = false;
+
+  // Check if button 0 (D_BTN) is held for 5 seconds
+  if (digitalRead(D_BTN) == LOW) { // Button is pressed
+    if (!buttonHeld) {
+      buttonHeld = true;
+      buttonPressStart = millis();
+    } else if (millis() - buttonPressStart >= 5000) { // Held for 5 seconds
+      Serial.println("Entering deep sleep...");
+      esp_deep_sleep_start(); // Trigger deep sleep
+    }
+  } else {
+    buttonHeld = false; // Reset if button is released
+  }
+
+  // Existing logic below
   currentTime = millis();
   bool mini = false;
 
@@ -354,43 +377,30 @@ void loop() {
 #endif
 
   // Update all of our objects
-  /*#ifdef HAS_SCREEN
-    bool do_draw = display_obj.draw_tft;
-  #else
-    bool do_draw = false;
-  #endif*/
-
-  //if ((!do_draw) && (wifi_scan_obj.currentScanMode != ESP_UPDATE))
-  //{
   cli_obj.main(currentTime);
 #ifdef HAS_SCREEN
   display_obj.main(wifi_scan_obj.currentScanMode);
 #endif
   wifi_scan_obj.main(currentTime);
-  //evil_portal_obj.main(wifi_scan_obj.currentScanMode);
 
 #ifdef HAS_GPS
   gps_obj.main();
 #endif
 
-// Detect SD card
 #if defined(HAS_SD)
   sd_obj.main();
 #endif
 
-  // Save buffer to SD and/or serial
   buffer_obj.save();
 
 #ifdef HAS_BATTERY
   battery_obj.main(currentTime);
-  //temp_obj.main(currentTime);
 #endif
   settings_obj.main(currentTime);
   if (((wifi_scan_obj.currentScanMode != WIFI_PACKET_MONITOR) && (wifi_scan_obj.currentScanMode != WIFI_SCAN_EAPOL)) || (mini)) {
 #ifdef HAS_SCREEN
     menu_function_obj.main(currentTime);
 #endif
-    //cli_obj.main(currentTime);
   }
 #ifdef MARAUDER_FLIPPER
   flipper_led.main();
@@ -402,8 +412,6 @@ void loop() {
   led_obj.main(currentTime);
 #endif
 
-//if (wifi_scan_obj.currentScanMode == OTA_UPDATE)
-//  web_obj.main();
 #ifdef HAS_SCREEN
   delay(1);
 #else
