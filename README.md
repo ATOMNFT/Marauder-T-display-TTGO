@@ -25,7 +25,6 @@
 | • Wardriving Menu added                    |                                                                                                                                                                        |                                                                                                                                                 |                                                                                                                                                                   |                                                                                                                                               |
 | • Evil Portal storage adjustment           | Moves all portals into a folder instead of root of SD card  
 | • (1/13/25) Added Deep Sleep/off Mode      | Allows T-Display to be shutdown by putting the device into deep sleep                                                                                                           |
-<br>
 
 ## Fixes 1/13/25
 - Adjusted channel hop time back to 1 second.
