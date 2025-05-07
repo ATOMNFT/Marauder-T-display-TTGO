@@ -43,7 +43,7 @@ Make sure to back up your TFT_eSPI lib folder prior to replacing these files.
 Here is a simple pic to explain wiring up a micro SD module.
 ![T-display-SD-Pin](Images/T-display-SD-Pin.png)
 
-# 🛠️ **SD Portal fix**
+# 🛠️ **SD Portal fix (Only in 1.2.0)**
 
   ### Adjusted sd card portal storage
   <b>I have tweaked a section of two files (EvilPortal.cpp & SDInterface.h) to allow the portals used in EP to be stored in a folder on the sd card instead of just being stored in the root of sd card
