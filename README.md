@@ -11,7 +11,7 @@
 <div align="left">
 
 
-## ⬆ TTGO T-Display 1.14in Update Highlights 12/23/24 ⬆ <br> Added New v1.2.0!
+## ⬆ TTGO T-Display 1.14in Update Highlights 5/7/25 ⬆ <br> Added New v1.4.6!
   
 | Feature/Update                             | Description/Notes                                                                                                                                                        |
 |--------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -26,9 +26,6 @@
 | • Evil Portal storage adjustment           | Moves all portals into a folder instead of root of SD card  
 | • (1/13/25) Added Deep Sleep/off Mode      | Allows T-Display to be shutdown by putting the device into deep sleep                                                                                                           |
 
-## Fixes 1/13/25
-- Adjusted channel hop time back to 1 second.
-- Fixed EP not populating the portal on target after succesful connection. 
 
 ---
 
