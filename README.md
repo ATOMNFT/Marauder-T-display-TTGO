@@ -13,18 +13,6 @@
 
 ## ⬆ TTGO T-Display 1.14in Update Highlights 5/7/25 ⬆ <br> Added New v1.4.6!
   
-| Feature/Update                             | Description/Notes                                                                                                                                                        |
-|--------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| • Added logging to SD for Flipper/AirTag sniff | Thanks to Fr4nkFletcher                                                                                                                                               |
-| • Added Pcap capture of flipper data       | WIP as the pcap is malformed
-| • Add support for Adafruit MAX17048 battery monitor       |
-| • Added Flipper Zero Sniff                 |                                                                                                                                         |
-| • Update Save/Load Files menu to add for saving and loading AirTags                 |                                                                                                                                                                        |
-| • Airtag Sniffing/Spoofing                 |                                                                                                                                                                        |                                                                                                                                                                     |
-| • Flipper BLE Spam                         |                                                                                                                                                                        |
-| • Wardriving Menu added                    |                                                                                                                                                                        |                                                                                                                                                 |                                                                                                                                                                   |                                                                                                                                               |
-| • Evil Portal storage adjustment           | Moves all portals into a folder instead of root of SD card  
-| • (1/13/25) Added Deep Sleep/off Mode      | Allows T-Display to be shutdown by putting the device into deep sleep                                                                                                           |
 
 
 ---
