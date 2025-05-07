@@ -106,7 +106,7 @@
       <legend>1.2.0 T-Display Marauder</legend>
       <select id="select-1.2.0">
         <option value="" selected disabled>Choose below</option>
-        <option value="T-Display_Marauder_1.2.0">1.2.0 Marauder</option>
+        <option value="T-Display_Marauder_1.4.6">1.4.6 Marauder</option>
       </select>
     </fieldset>
     <p class="button-row" align="center">
@@ -114,7 +114,7 @@
     </p>
   </center>
   <script>
-    document.getElementById('select-1.2.0').addEventListener('change', (event) => {
+    document.getElementById('select-1.4.6').addEventListener('change', (event) => {
       const button = document.querySelector('esp-web-install-button');
       button.manifest = `web/manifest_${event.target.value}.json`;
       button.classList.remove('invisible');
