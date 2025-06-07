@@ -11,7 +11,10 @@
 <div align="left">
 
 
-## ⬆ TTGO T-Display 1.14in Update Highlights 5/7/25 ⬆ <br> Added New v1.4.6!
+## ⬆ TTGO T-Display 1.14in Update Highlights 6/7/25 ⬆ <br> Added New v1.6.2!
+* Added battery meter (Displayed in volts) for MARAUDER_TTGO_TDISPLAY
+* Added deep sleep function (Hold down scroll button 6 seconds) for MARAUDER_TTGO_TDISPLAY
+* Adjusted font size on statusbar
   
 
 
