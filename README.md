@@ -46,23 +46,6 @@ Make sure to back up your TFT_eSPI lib folder prior to replacing these files.
 Here is a simple pic to explain wiring up a micro SD module.
 ![T-display-SD-Pin](Images/T-display-SD-Pin.png)
 
-# 🛠️ **SD Portal fix (Only in 1.2.0)**
-
-  ### Adjusted sd card portal storage
-  <b>I have tweaked a section of two files (EvilPortal.cpp & SDInterface.h) to allow the portals used in EP to be stored in a folder on the sd card instead of just being stored in the root of sd card
-  along with all the pcaps and other files captured.</b>
-  
-  ### SD Setup for T-Display
-  If you flashed from the <a href=https://atomnft.github.io/Marauder-T-display-TTGO/flash0.html>Marauder T-display flash tool</a> or built from <a href=https://github.com/ATOMNFT/Marauder-T-display-TTGO>Marauder T-display</a> then you must create a folder titled "portals" or drop the "portals" folder in this repo on the root of your sd card after unzipping it.
-  
-  <br>
- 
-  <b>The folder titled "portals is to be added to the root of your sd card. It contains the ap.config file, a file titled "index.html", and a few smaller sized portals. Download the 7z file and unzip it. Drag or copy/paste the folder titled "portals" to the root of your sd card. </b>
-  
-  <br>
-  
-  <b>The sd adjustment/fix is already included in <a href=https://github.com/ATOMNFT/Marauder-T-display-TTGO> this sketch for the T-Display.</a>  if you plan to build from source</b>
-
 <hr>
 
 > # 🛠️ **Device Compatibility**
