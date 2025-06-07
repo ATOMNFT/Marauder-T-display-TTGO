@@ -71,7 +71,7 @@ Here is a simple pic to explain wiring up a micro SD module.
 <hr>
 
 # ⚡ **Web Flasher** ⚡
-Use the link below to flash with the new web flasher tool!
+Use the button below to flash with the new web flasher tool!
 <br>
 [![](https://github.com/ATOMNFT/Marauder-T-display-TTGO/blob/main/Images/Flash-Button.png)](https://atomnft.github.io/Marauder-T-display-TTGO/flash0.html)
 
