@@ -18,6 +18,7 @@
 
 ## 🐛 Bugs 🐛
 * BLE scan will sometimes crash device.
+* 
 Let me know if you find more.
   
 
