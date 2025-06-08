@@ -494,9 +494,15 @@ void Display::displayBuffer(bool do_clear)
   }
 }
 
+// Edited for MARAUDER_TTGO_TDISPLAY to display titles better
 void Display::showCenterText(String text, int y)
 {
-  tft.setCursor((SCREEN_WIDTH - (text.length() * (6 * BANNER_TEXT_SIZE))) / 2, y);
+  #if defined(HAS_MINI_SCREEN) && defined(MARAUDER_TTGO_TDISPLAY)
+    tft.setCursor((SCREEN_WIDTH - (text.length() * (6 * BANNER_TEXT_SIZE))) / 2, 18);
+  #else
+    tft.setCursor((SCREEN_WIDTH - (text.length() * (6 * BANNER_TEXT_SIZE))) / 2, y);
+  #endif
+
   tft.println(text);
 }
 
