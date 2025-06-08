@@ -15,6 +15,10 @@
 * Added battery meter (Displayed in volts) for MARAUDER_TTGO_TDISPLAY
 * Added deep sleep function (Hold down scroll button 6 seconds) for MARAUDER_TTGO_TDISPLAY
 * Adjusted font size on statusbar
+
+## 🐛 Bugs 🐛
+* BLE scan will sometimes crash device.
+Let me know if you find more.
   
 
 
