@@ -159,9 +159,14 @@ void backlightOff() {
 void setup()
 {
   #if defined(MARAUDER_TTGO_TDISPLAY)
-  pinMode(D_BTN, INPUT_PULLUP); // Configure button as input for deep sleep TTGO Tdisplay
+    pinMode(D_BTN, INPUT_PULLUP); // Configure button as input for deep sleep TTGO Tdisplay
   #endif
-  esp_spiram_init();  // Commented out for use with ESP32C3SUPERMINI. Uncomment if not using ESP32C3SUPERMINI
+
+  #ifndef ESP32_C3_SM
+    esp_spiram_init();  // Enabled for all except ESP32_C3_SM
+    #else
+    // esp_spiram_init();  // Disabled for ESP32_C3_SM
+  #endif
 
   #ifdef defined(MARAUDER_M5STICKC) && !defined(MARAUDER_M5STICKCP2)
     axp192_obj.begin();
