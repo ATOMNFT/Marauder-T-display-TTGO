@@ -20,9 +20,6 @@
 * Let me know if you find any
 * 
 
-  
-
-
 ---
 
 📡 TTGO T-Display WiFi Marauder Fork 🚀
@@ -47,8 +44,9 @@ Here is a simple pic to explain wiring up a micro SD module.
 
 <hr>
 
-# ⚡ **Web Flasher** ⚡
-Use the button below to flash with the new web flasher tool!
+## ⚡ Simple Flash Method ⚡
+* If you're not viewing this page in google chrome you should do so now by right clicking the button and copying the address and opening it with google chrome.
+* If you're already in chrome click the button to flash the project onto TTGO T-Display
 <br>
 [![](https://github.com/ATOMNFT/Marauder-T-display-TTGO/blob/main/Images/flashbutton.png)](https://atomnft.github.io/Marauder-T-display-TTGO/flash0.html)
 
