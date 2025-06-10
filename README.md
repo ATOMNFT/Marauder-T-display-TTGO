@@ -17,9 +17,9 @@
 * Adjusted font size on statusbar
 
 ## 🐛 Bugs 🐛
-* BLE scan will sometimes crash device.
+* Let me know if you find any
 * 
-Let me know if you find more.
+
   
 
 
