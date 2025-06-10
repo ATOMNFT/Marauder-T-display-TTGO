@@ -33,20 +33,6 @@ Take your TTGO T-Display to the next level with these powerful updates! Contribu
 
 ---
 
-# 📚 Libraries 📚
-You MUST install this version of NimBLE <a href=https://github.com/h2zero/NimBLE-Arduino/releases/tag/1.3.5>NimBLE 1.3.5</a>
-<br>
-The other libraries needed can be located <a href=https://github.com/justcallmekoko/ESP32Marauder/wiki/installing-firmware-from-source#installing-firmware-from-source>HERE</a> 
-
----
-
-# ⚙️ User_Setup Files ⚙️
-<a href=https://github.com/ATOMNFT/Marauder-T-display-TTGO/tree/main/User_Setups>THESE</a> files are to be placed in the TFT_eSPI library folder if you plan to compile from the sketch files.
-<br> 
-Make sure to back up your TFT_eSPI lib folder prior to replacing these files.
-
----
-
 # SD Wiring Diagram
 Here is a simple pic to explain wiring up a micro SD module.
 ![T-display-SD-Pin](Images/T-display-SD-Pin.png)
