@@ -1,0 +1,6 @@
+{
+  "name": "TTGO T-Display Marauder",
+  "version": "1.7.2",
+  "description": "ESP32 Marauder for TTGO T-Display.",
+  "icon": "Images/tdisplay-icon.png"
+}
