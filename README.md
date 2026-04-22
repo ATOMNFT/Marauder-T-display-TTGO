@@ -17,8 +17,9 @@
 * Adjusted font size on statusbar
 
 ## 🐛 Bugs 🐛
+* UART not working
 * Let me know if you find any
-* 
+
 
 ---
 
