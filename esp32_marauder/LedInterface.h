@@ -1,0 +1,52 @@
+#pragma once
+
+#ifndef LedInterface_h
+#define LedInterface_h
+
+#include "configs.h"
+#include "settings.h"
+#include <Arduino.h>
+#ifdef HAS_NEOPIXEL_LED
+  #include <Adafruit_NeoPixel.h>
+#endif
+
+#define Pixels 1
+
+extern Settings settings_obj;
+
+#ifdef HAS_NEOPIXEL_LED
+  extern Adafruit_NeoPixel strip;
+#endif
+
+class LedInterface {
+
+  private:
+    uint32_t initTime = 0;
+
+    int current_fade_itter = 1;
+    int wheel_pos = 255;
+    int wheel_speed = 1; // lower = slower
+
+    uint32_t Wheel(byte WheelPos);
+
+    uint8_t current_mode = MODE_OFF;
+
+    void rainbow();
+    void ledOff();
+    void attackLed();
+    void sniffLed();
+  
+  public:
+    LedInterface();
+
+    void RunSetup();
+    void main(uint32_t currentTime);
+
+    void setMode(uint8_t);
+    void setColor(int r, int g, int b);
+    uint8_t getMode();
+    
+  
+};
+
+#endif
