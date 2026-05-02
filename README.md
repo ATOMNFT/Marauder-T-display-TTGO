@@ -11,7 +11,7 @@
 <div align="left">
 
 
-## ⬆ TTGO T-Display 1.14in Update Highlights 4/22/26 ⬆ <br> Added New v1.11.1!
+## ⬆ TTGO T-Display 1.14in Update Highlights 5/2/26 ⬆ <br> Added New v1.12.0!
 * Added battery meter (Displayed in volts)
 * Added deep sleep function (Hold down scroll button 6 seconds)
 * Adjusted font size on statusbar
