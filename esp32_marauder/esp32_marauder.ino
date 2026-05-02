@@ -1,5 +1,6 @@
 /* FLASH SETTINGS
-Board: LOLIN D32
+Board: LOLIN D32 (For ESP32_C3_SM use ESP32C3 Dev Module. For MARAUDER_TTGO_TDISPLAY use LOLIN D32. For MARAUDER_S2MINI use LOLIN S2 Mini)
+For MARAUDER_S2MINI: USB CDC on boot (disabled)
 Flash Frequency: 80MHz
 Partition Scheme: Minimal SPIFFS
 https://www.online-utility.org/image/convert/to/XBM
