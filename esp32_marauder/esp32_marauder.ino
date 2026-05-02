@@ -1,6 +1,5 @@
 /* FLASH SETTINGS
-Board: LOLIN D32 (For ESP32_C3_SM use ESP32C3 Dev Module. For MARAUDER_TTGO_TDISPLAY use LOLIN D32. For MARAUDER_S2MINI use LOLIN S2 Mini)
-For MARAUDER_S2MINI: USB CDC on boot (disabled)
+Board: LOLIN D32
 Flash Frequency: 80MHz
 Partition Scheme: Minimal SPIFFS
 https://www.online-utility.org/image/convert/to/XBM
@@ -448,6 +447,9 @@ void setup()
   #endif
 
   #ifdef HAS_SCREEN
+    #if defined(MARAUDER_CARDPUTER) || defined(MARAUDER_CARDPUTER_ADV)
+      display_obj.clearScreen();
+    #endif
     menu_function_obj.RunSetup();
   #endif
 
@@ -534,7 +536,7 @@ void loop()
       menu_function_obj.main(currentTime);
     #endif
   }
-   #ifdef HAS_FLIPPER_LED
+  #ifdef HAS_FLIPPER_LED
     flipper_led.main();
   #elif defined(XIAO_ESP32_S3)
     xiao_led.main();

@@ -28,7 +28,13 @@ void BatteryInterface::RunSetup() {
 
   #ifdef HAS_BATTERY
 
-    #ifndef HAS_AXP2101
+    #ifdef BATTERY_ADC_PIN
+      analogReadResolution(12);
+      pinMode(BATTERY_ADC_PIN, INPUT);
+      this->has_adc_battery = true;
+      this->i2c_supported = true;
+      Serial.println(F("Battery: ADC mode"));
+    #elif !defined(HAS_AXP2101)
       Wire.begin(I2C_SDA, I2C_SCL);
 
       Wire.beginTransmission(IP5306_ADDR);
@@ -67,12 +73,21 @@ void BatteryInterface::RunSetup() {
       adc1_config_channel_atten(ADC1_CHANNEL_6, ADC_ATTEN_DB_11);  // GPIO 34
       esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN_DB_11, ADC_WIDTH_BIT_12, 1100, &adc_chars);
     #endif
-    
+
     this->initTime = millis();
   #endif
 }
 
 int8_t BatteryInterface::getBatteryLevel() {
+
+  #ifdef BATTERY_ADC_PIN
+    if (this->has_adc_battery) {
+      int voltage_mv = analogReadMilliVolts(BATTERY_ADC_PIN) * 2; // voltage divider ratio 2:1
+      if (voltage_mv <= 3300) return 0;
+      if (voltage_mv >= 4150) return 100;
+      return (int8_t)(((voltage_mv - 3300) * 100) / 850);
+    }
+  #endif
 
   if (this->has_ip5306) {
     Wire.beginTransmission(IP5306_ADDR);

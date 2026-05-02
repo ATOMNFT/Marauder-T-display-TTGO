@@ -156,6 +156,7 @@
 #define WIFI_ATTACK_QUIET 80
 #define BT_SCAN_RAYBAN 81
 #define BT_ATTACK_APPLE_JUICE 82
+#define WIFI_SCAN_DISPLAY_AP_INFO 83
 
 #define WIFI_ATTACK_FUNNY_BEACON 99 
 
@@ -276,7 +277,8 @@ struct Flipper {
 
 enum class MacSortMode : uint8_t {
   MOST_RECENT,
-  MOST_FRAMES
+  MOST_FRAMES,
+  HIGH_RSSI
 };
 
 class WiFiScan
@@ -315,6 +317,8 @@ class WiFiScan
     bool wsl_bypass_enabled = false;
 
     bool scan_complete = false;
+
+    uint8_t wardrive_channel_index = 0;
 
     //int num_beacon = 0; // GREEN
     //int num_probe = 0; // BLUE
@@ -574,6 +578,8 @@ class WiFiScan
       NimBLEAdvertisementData GetUniversalAdvertisementData(EBLEPayloadType type);
     #endif
 
+    void throwThatShitInACircle();
+    void displayTargetFilter();
     void displayTransmitRate();
     void prepareScanStage(uint16_t color_1, uint16_t color_2);
     void setLEDMode(int mode);
@@ -639,7 +645,7 @@ class WiFiScan
     void broadcastRandomSSID(uint32_t currentTime);
     void broadcastCustomBeacon(uint32_t current_time, ssid custom_ssid);
     void broadcastCustomBeacon(uint32_t current_time, AccessPoint custom_ssid, int scan_mode);
-    void broadcastSetSSID(uint32_t current_time, const char* ESSID);
+    void broadcastSetSSID(uint32_t current_time, const char* ESSID, uint8_t chan = 0, bool legit = false);
     void RunAPScan(uint8_t scan_mode, uint16_t color);
     void RunGPSNmea();
     void RunPwnScan(uint8_t scan_mode, uint16_t color);
@@ -664,6 +670,7 @@ class WiFiScan
     void writeHeader(bool poi = false);
     void writeFooter(bool poi = false);
     void displayWardriveStats();
+    void displayAPStats();
 
 
   public:
@@ -677,6 +684,7 @@ class WiFiScan
     bool send_deauth = false;
 
     bool channel_hop = false;
+    uint8_t connected_devices = 0;
 
 
     static MacEntry mac_entries[mac_history_len_half];
@@ -685,6 +693,36 @@ class WiFiScan
     String header_line = "WigleWifi-1.4,appRelease=" + (String)MARAUDER_VERSION + ",model=ESP32 Marauder,release=" + (String)MARAUDER_VERSION + ",device=ESP32 Marauder,display=SPI TFT,board=ESP32 Marauder,brand=JustCallMeKoko\nMAC,SSID,AuthMode,FirstSeen,Channel,RSSI,CurrentLatitude,CurrentLongitude,AltitudeMeters,AccuracyMeters,Type\n";
 
     uint8_t dual_band_channels[DUAL_BAND_CHANNELS] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100, 104, 108, 112, 116, 120, 124, 128, 132, 136, 140, 144, 149, 153, 157, 161, 165, 169, 173, 177};
+
+    uint8_t oui_list[27][3] = {
+    {0x58, 0x8E, 0x81},
+    {0xCC, 0xCC, 0xCC},
+    {0xEC, 0x1B, 0xBD},
+    {0x90, 0x35, 0xEA},
+    {0x04, 0x0D, 0x84},
+    {0xF0, 0x82, 0xC0},
+    {0x1C, 0x34, 0xF1},
+    {0x38, 0x5B, 0x44},
+    {0x94, 0x34, 0x69},
+    {0xB4, 0xE3, 0xF9},
+    {0x70, 0xC9, 0x4E},
+    {0x3C, 0x91, 0x80},
+    {0xD8, 0xF3, 0xBC},
+    {0x80, 0x30, 0x49},
+    {0x14, 0x5A, 0xFC},
+    {0x74, 0x4C, 0xA1},
+    {0x08, 0x3A, 0x88},
+    {0x9C, 0x2F, 0x9D},
+    {0x94, 0x08, 0x53},
+    {0xE4, 0xAA, 0xEA},
+    {0xF4, 0x6A, 0xDD},
+    {0xF8, 0xA2, 0xD6},
+    {0xE0, 0x0A, 0xF6},
+    {0x00, 0xF4, 0x8D},
+    {0xD0, 0x39, 0x57},
+    {0xE8, 0xD0, 0xFC},
+    {0xB4, 0x1E, 0x52}
+    };
 
     uint8_t dual_band_channel_index = 0;
 
@@ -715,6 +753,7 @@ class WiFiScan
     uint32_t deauth_frames = 0;
     uint32_t eapol_frames = 0;
     uint32_t complete_eapol = 0;
+    uint32_t flock_devices = 0;
     int8_t min_rssi = 0;
     int8_t max_rssi = -128;
 
@@ -726,11 +765,12 @@ class WiFiScan
     bool ep_deauth = false;
     bool ble_scanning = false;
 
-    char* flock_ssid[4] = {
+    char* flock_ssid[5] = {
       "flock",
       "penguin",
       "pigvision",
-      "fs ext battery"
+      "fs ext battery",
+      "Flock"
     };
 
     #ifdef HAS_DUAL_BAND
@@ -774,8 +814,13 @@ class WiFiScan
     byte src_mac[6] = {};
 
     #ifdef HAS_SCREEN
-      int16_t _analyzer_values[TFT_WIDTH];
-      int16_t _temp_analyzer_values[TFT_WIDTH];
+      #if !defined(MARAUDER_CARDPUTER) && !defined(MARAUDER_CARDPUTER_ADV)
+        int16_t _analyzer_values[TFT_WIDTH];
+        int16_t _temp_analyzer_values[TFT_WIDTH];
+      #else
+        int16_t _analyzer_values[SCREEN_WIDTH];
+        int16_t _temp_analyzer_values[SCREEN_WIDTH];
+      #endif
     #endif
 
     String current_mini_kb_ssid = "";
@@ -823,6 +868,10 @@ class WiFiScan
 
     wifi_config_t ap_config;
 
+    bool checkFlockOUI(const uint8_t mac[6]);
+    bool startWiFi(String ssid, String password, bool gui = true);
+    bool isFlockCamera(const uint8_t* payload, size_t len, const String& name, String* serial_out);
+    uint16_t rssiToColor(int8_t rssi);
     bool isMetaIdentifier(uint16_t id);
     bool isBlockedIdentifier(uint16_t id);
     uint32_t getCompleteEapol(int check_index = -1);
@@ -889,6 +938,11 @@ class WiFiScan
     void startGPX(String file_name);
     //String macToString(const Station& station);
 
+    static WiFiEventId_t eventId;
+    static String lastClientMAC;
+    static String lastClientIP;
+
+    static void onWiFiEvent(WiFiEvent_t event, WiFiEventInfo_t info);
     static bool initMbedtls();
     static int mbedtls_entropy_source(void *data, unsigned char *output, size_t len);
     static bool getSAEACT(const uint8_t *frame, size_t frame_len, uint16_t &group_out, size_t &act_len_out);

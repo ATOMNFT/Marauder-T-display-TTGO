@@ -39,6 +39,7 @@ class BatteryInterface {
     bool has_max17048 = false;
     bool has_ip5306 = false;
     bool has_axp2101 = false;
+    bool has_adc_battery = false;
 
     BatteryInterface();
 

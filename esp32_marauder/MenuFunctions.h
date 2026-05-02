@@ -5,7 +5,7 @@
 
 #include "configs.h"
 
-#ifdef MARAUDER_CARDPUTER
+#if defined(MARAUDER_CARDPUTER) || defined(MARAUDER_CARDPUTER_ADV)
   #include "Keyboard.h"
 #endif
 
@@ -15,7 +15,7 @@
 
 #ifdef HAS_SCREEN
 
-#define BATTERY_ANALOG_ON 0
+#define BATTERY_ANALOG_ON 1
 
 #include "WiFiScan.h"
 #include "BatteryInterface.h"
@@ -225,14 +225,18 @@ class MenuFunctions
     void displaySetting(String key, Menu* menu, int index);
     void buttonSelected(int b, int x = -1);
     void buttonNotSelected(int b, int x = -1);
+    #ifdef HAS_MINI_SCREEN
+      void drawMiniMenuButton(int b, int x, bool selected);
+    #endif
     //#if (!defined(HAS_ILI9341) && defined(HAS_BUTTONS))
     #ifdef HAS_MINI_KB
       String miniKeyboard(Menu * targetMenu, bool do_pass = false);
     #endif
     //#endif
 
-    #ifdef MARAUDER_CARDPUTER
+    #if defined(MARAUDER_CARDPUTER) || defined(MARAUDER_CARDPUTER_ADV)
       Keyboard_Class M5CardputerKeyboard = Keyboard_Class();
+      void updateKeyboard();
       bool isKeyPressed(char c);
     #endif
 
