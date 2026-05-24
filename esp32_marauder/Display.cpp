@@ -40,7 +40,7 @@ int8_t Display::menuButton(uint16_t *x, uint16_t *y, bool pressed, bool check_ho
 }
 
 uint8_t Display::updateTouch(uint16_t *x, uint16_t *y, uint16_t threshold) {
-  #if defined(HAS_ILI9341) || defined(HAS_ST7789)
+  #ifdef HAS_ILI9341
     if (!this->headless_mode)
       #ifndef HAS_CYD_TOUCH
         return this->tft.getTouch(x, y, threshold);
@@ -48,89 +48,44 @@ uint8_t Display::updateTouch(uint16_t *x, uint16_t *y, uint16_t threshold) {
         if (this->touchscreen.tirqTouched() && this->touchscreen.touched()) {
           TS_Point p = this->touchscreen.getPoint();
 
+          //*x = map(p.x, 200, 3700, 1, TFT_WIDTH);
+          //*y = map(p.y, 240, 3800, 1, TFT_HEIGHT);
+
           uint8_t rot = this->tft.getRotation();
 
-          switch (rot) {  // ----------------------------------------------Edited-----------------------------------------------------
-            case 0: // Portrait
-              #if defined(HAS_ST7789)
-                // CYD 2USB ST7789 portrait touch mapping
-                // Start with a direct portrait map.
-                // If X/Y are swapped or mirrored, this section is the one to tune.
-                *x = map(p.x, 200, 3700, 1, TFT_WIDTH);
-                *y = map(p.y, 240, 3800, 1, TFT_HEIGHT);
-              #else
-                // CYD ILI9341 portrait touch mapping
-                *x = map(p.x, 200, 3700, 1, TFT_WIDTH);
-                *y = map(p.y, 240, 3800, 1, TFT_HEIGHT);
-              #endif
+          //#ifdef HAS_CYD_PORTRAIT
+          //  rot = 0;
+          //#endif
 
-              // Fine-tune portrait keyboard touch alignment.
-              // Negative X moves the touch hit-point left.
-              // Positive Y moves the touch hit-point down.
-              *x -= 12;
-              *y += 22;
+          switch (rot) {
+            case 0: // Standard Protrait
+              *x = map(p.x, 200, 3700, 1, TFT_WIDTH);
+              *y = map(p.y, 240, 3800, 1, TFT_HEIGHT);
               break;
-
-            case 1: // Landscape
-              #if defined(HAS_ST7789)
-                // CYD 2USB ST7789 landscape touch mapping
-                // This is separated from ILI9341 so it can be tuned independently.
-                *x = map(p.y, 143, 3715, 0, TFT_WIDTH);
-                *y = map(p.x, 3786, 216, 0, TFT_HEIGHT);
-              #else
-                // CYD ILI9341 landscape touch mapping
-                *x = map(p.y, 143, 3715, 0, TFT_WIDTH);
-                *y = map(p.x, 3786, 216, 0, TFT_HEIGHT);
-              #endif
-
-              // Fine-tune CYD touch alignment.
-              // Negative X moves the touch hit-point left.
-              // Positive Y moves the touch hit-point down.
-              *x -= 12;
-              *y += 22;
+            case 1:
+              *x = map(p.y, 143, 3715, 0, TFT_HEIGHT);     // Horizontal (Y axis in touch, X on screen)
+              *y = map(p.x, 3786, 216, 0, TFT_WIDTH);    // Vertical (X axis in touch, Y on screen)
               break;
-
-            case 2: // Inverted portrait
-              #if defined(HAS_ST7789)
-                // CYD 2USB ST7789 inverted portrait mapping
-                *x = map(p.x, 3700, 200, 1, TFT_WIDTH);
-                *y = map(p.y, 3800, 240, 1, TFT_HEIGHT);
-              #else
-                // CYD ILI9341 inverted portrait mapping
-                *x = map(p.x, 3700, 200, 1, TFT_WIDTH);
-                *y = map(p.y, 3800, 240, 1, TFT_HEIGHT);
-              #endif
+            case 2:
+              *x = map(p.x, 3700, 200, 1, TFT_WIDTH);
+              *y = map(p.y, 3800, 240, 1, TFT_HEIGHT);
               break;
-
-            case 3: // Inverted landscape
-              #if defined(HAS_ST7789)
-                // CYD 2USB ST7789 inverted landscape mapping
-                *x = map(p.y, 3800, 240, 1, TFT_WIDTH);
-                *y = map(p.x, 200, 3700, 1, TFT_HEIGHT);
-              #else
-                // CYD ILI9341 inverted landscape mapping
-                *x = map(p.y, 3800, 240, 1, TFT_WIDTH);
-                *y = map(p.x, 200, 3700, 1, TFT_HEIGHT);
-              #endif
+            case 3:
+              *x = map(p.y, 3800, 240, 1, TFT_WIDTH);
+              *y = map(p.x, 200, 3700, 1, TFT_HEIGHT);
               break;
           }
-
-          // Keep touch coordinates inside the visible screen area
-          *x = constrain(*x, 0, TFT_WIDTH - 1);
-          *y = constrain(*y, 0, TFT_HEIGHT - 1);
-
           return 1;
         }
-        else {
+        else
           return 0;
-        }
       #endif
     else
       return !this->headless_mode;
   #endif
 
   return 0;
-}  // ----------------------------------------------End Edited-------------------------------------------------------------------------------
+}
 
 bool Display::isTouchHeld(uint16_t threshold) {
   static unsigned long touchStartTime = 0;
@@ -567,7 +522,13 @@ void Display::processAndPrintString(TFT_eSPI& tft, const String& originalString)
     }
   }
 
-  String spaces = String(' ', TFT_WIDTH / CHAR_WIDTH);
+  int count = TFT_WIDTH / CHAR_WIDTH;
+
+  char buf[count + 1];
+  memset(buf, ' ', count);
+  buf[count] = '\0';
+
+  String spaces(buf);
 
   // Set text color and print the string
   tft.setTextColor(text_color, background_color);
@@ -648,6 +609,7 @@ void Display::showCenterText(String text, int y, bool small_pp)
 
   tft.println(text);
 }
+
 
 void Display::updateBanner(String msg)
 {

@@ -1,6 +1,6 @@
 /* FLASH SETTINGS
 Board: LOLIN D32 (For ESP32_C3_SM use ESP32C3 Dev Module. For MARAUDER_TTGO_TDISPLAY use LOLIN D32. For MARAUDER_S2MINI use LOLIN S2 Mini)
-For MARAUDER_S2MINI: USB CDC on boot (disabled)
+For MARAUDER_S2MINI: USB CDC on boot (disabled). In conjunction with line 275 below
 Flash Frequency: 80MHz
 Partition Scheme: Minimal SPIFFS
 https://www.online-utility.org/image/convert/to/XBM
@@ -205,12 +205,8 @@ uint32_t currentTime  = 0;
 #else
   void backlightOn() {
     #ifdef HAS_SCREEN
-      #if defined(MARAUDER_MINI) || defined(MARAUDER_MINI_V3) && !defined(DUAL_MINI_C5)
+      #if defined(MARAUDER_MINI) || defined(MARAUDER_MINI_V3)
         digitalWrite(TFT_BL, LOW);
-      #endif
-
-      #if defined(DUAL_MINI_C5)
-        digitalWrite(TFT_BL, HIGH);
       #endif
     
       #if !defined(MARAUDER_MINI) && !defined(MARAUDER_MINI_V3)
@@ -221,12 +217,8 @@ uint32_t currentTime  = 0;
 
   void backlightOff() {
     #ifdef HAS_SCREEN
-      #if defined(MARAUDER_MINI) || defined(MARAUDER_MINI_V3) && !defined(DUAL_MINI_C5)
+      #if defined(MARAUDER_MINI) || defined(MARAUDER_MINI_V3)
         digitalWrite(TFT_BL, HIGH);
-      #endif
-
-      #if defined(DUAL_MINI_C5)
-        digitalWrite(TFT_BL, LOW);
       #endif
     
       #if !defined(MARAUDER_MINI) && !defined(MARAUDER_MINI_V3)
@@ -245,16 +237,6 @@ void setup()
 {
   #if defined(MARAUDER_TTGO_TDISPLAY)
     pinMode(D_BTN, INPUT_PULLUP); // Configure button as input for deep sleep TTGO Tdisplay
-  #endif
-
-  // #ifndef ESP32_C3_SM
-  //   esp_spiram_init();  // Enabled for all except ESP32_C3_SM
-  //   #else
-  //   // esp_spiram_init();  // Disabled for ESP32_C3_SM
-  // #endif
-
-  #if !defined(ESP32_C3_SM) && !defined(HAS_IDF_3)
-  esp_spiram_init();  // Call esp_spiram_init() only if both conditions are met
   #endif
 
   randomSeed(esp_random());
@@ -308,10 +290,6 @@ void setup()
   // Preset SPI CS pins to avoid bus conflicts
   #ifdef HAS_SCREEN
     digitalWrite(TFT_CS, HIGH);
-  #endif
-
-  #ifdef ESP32_C3_SM
-    digitalWrite(TFT_BL, HIGH); //---------------------------------- Turn on the backlight *For ESP32 C3 Super Mini* (Causing error when uncommented)
   #endif
   
   #if defined(HAS_SD) && !defined(HAS_C5_SD)
@@ -375,7 +353,6 @@ void setup()
       display_obj.tft.drawCentreString("ESP32 Marauder", TFT_WIDTH/2, TFT_HEIGHT * 0.33, 1);
       display_obj.tft.drawCentreString("JustCallMeKoko", TFT_WIDTH/2, TFT_HEIGHT * 0.5, 1);
       display_obj.tft.drawCentreString(display_obj.version_number, TFT_WIDTH/2, TFT_HEIGHT * 0.66, 1);
-
     #endif
   #endif
 
@@ -395,7 +372,9 @@ void setup()
 
   settings_obj.begin();
 
-  if (settings_obj.getSettingType("ChanHop") == "") {
+  const char* type = settings_obj.getSettingType("ChanHop");
+
+  if (type == nullptr || type[0] == '\0') {
     Serial.println(F("Current settings format not supported. Installing new default settings..."));
     settings_obj.createDefaultSettings(SPIFFS);
   }

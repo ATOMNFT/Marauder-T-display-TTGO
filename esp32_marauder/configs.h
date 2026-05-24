@@ -42,7 +42,7 @@
 
   #define JSON_SETTING_SIZE 2048
 
-  #define MARAUDER_VERSION "v1.12.0"
+  #define MARAUDER_VERSION "v1.12.1"
 
   #define GRAPH_REFRESH   100
 
@@ -82,9 +82,9 @@
   #elif defined(MARAUDER_V6_1)
     #define HARDWARE_NAME "Marauder v6.1"
   #elif defined(MARAUDER_CYD_MICRO)
-    #define HARDWARE_NAME "CYD MICRO"
+    #define HARDWARE_NAME "CYD 2432S028"
   #elif defined(MARAUDER_CYD_2USB)
-    #define HARDWARE_NAME "CYD 2USB"
+    #define HARDWARE_NAME "CYD 2432S028 2USB"
   #elif defined(MARAUDER_CYD_3_5_INCH)
     #define HARDWARE_NAME "CYD 3.5inch"
   #elif defined(MARAUDER_CYD_GUITION)
@@ -109,8 +109,8 @@
     #define HARDWARE_NAME "Marauder Mini v3"
   #elif defined(DUAL_MINI_C5)
     #define HARDWARE_NAME "Dual Mini C5"
-  #elif defined(ESP32_C3_SM)
-    #define HARDWARE_NAME "SM ESP32 C3"  //--------------------------------- New Boards Below --------------------------------------------------------------------------------------------
+  #elif defined(ESP32_C3_SM)  //--------------------------------- New Boards Below --------------------------------------------------------------------------------------------
+    #define HARDWARE_NAME "SM ESP32 C3"
   #elif defined(MARAUDER_TTGO_TDISPLAY)
     #define HARDWARE_NAME "TTGO T-Display"
   #elif defined(MARAUDER_S2MINI)
@@ -295,7 +295,7 @@
     #define HAS_TEMP_SENSOR
     #define HAS_GPS
     #define HAS_CYD_TOUCH
-    #define HAS_NIMBLE_2
+    //#define HAS_NIMBLE_2
   #endif
 
   #ifdef MARAUDER_CYD_2USB
@@ -317,7 +317,7 @@
     #define HAS_CYD_TOUCH
     #define HAS_CYD_PORTRAIT
     #define HAS_NIMBLE_2
-    //#define HAS_IDF_3
+    #define HAS_IDF_3
   #endif
 
   #ifdef MARAUDER_CYD_3_5_INCH
@@ -537,7 +537,7 @@
     #define HAS_IDF_3
     //#define HAS_SIMPLEX_DISPLAY
   #endif
-  
+
   #ifdef ESP32_C3_SM  // Custom Boards ---------------------------------------------------------------------------------------------------------------
     //#define FLIPPER_ZERO_HAT
     #define HAS_MINI_KB
@@ -578,7 +578,7 @@
   #endif
 
   #ifdef MARAUDER_S2MINI
-    #define HAS_FLIPPER_LED
+    //#define HAS_FLIPPER_LED
     //#define FLIPPER_ZERO_HAT
     //#define HAS_BATTERY
     //#define HAS_BT
@@ -1589,7 +1589,6 @@
 
       #define SCREEN_CHAR_WIDTH 40
       #define HAS_ILI9341
-      #define HAS_ST7789
     
       #define BANNER_TEXT_SIZE 2
 
