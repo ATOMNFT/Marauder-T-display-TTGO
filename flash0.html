@@ -42,6 +42,7 @@
       color: white;
       font-size: 16px;
       box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+      min-width: 280px;
     }
     select:focus {
       outline: none;
@@ -91,37 +92,44 @@
 </head>
 <body>
   <center>
-	<p class="wrapper" align="center">
-	  <span style="font-size: 20px; color: #FF1493;">This utility is designed to flash the ESP32-Marauder onto a TTGO T-Display.</span>
-	</p>
-	<div style="text-align: center; margin: 20px auto; max-width: 600px; padding: 15px; border: 2px solid #00FFFF; border-radius: 15px; background-color: rgba(255, 255, 255, 0.1); box-shadow: 0px 0px 10px rgba(0, 255, 255, 0.3); background-image: url('Images/usb-plug.gif'); background-size: 12% auto; background-position: left 0% top -2px; background-repeat: no-repeat;">
-	  <p style="color: #00FFFF; font-size: 18px; font-weight: bold; margin-bottom: 10px;">The T-Display Web Flasher</p>
-	  <p style="color: #FFF; font-size: 16px; margin: 0;">
-		Your gateway to effortlessly installing ESP32-Marauder firmware. Designed with a sleek web interface, it transforms
-		firmware flashing into a fast, hassle-free experience, empowering your devices for cutting-edge network security
-		and testing adventures.
-	  </p>
-	</div>
+    <p class="wrapper" align="center">
+      <span style="font-size: 20px; color: #FF1493;">This utility is designed to flash the ESP32-Marauder onto a TTGO T-Display.</span>
+    </p>
+    <div style="text-align: center; margin: 20px auto; max-width: 600px; padding: 15px; border: 2px solid #00FFFF; border-radius: 15px; background-color: rgba(255, 255, 255, 0.1); box-shadow: 0px 0px 10px rgba(0, 255, 255, 0.3); background-image: url('Images/usb-plug.gif'); background-size: 12% auto; background-position: left 0% top -2px; background-repeat: no-repeat;">
+      <p style="color: #00FFFF; font-size: 18px; font-weight: bold; margin-bottom: 10px;">The T-Display Web Flasher</p>
+      <p style="color: #FFF; font-size: 16px; margin: 0;">
+        Your gateway to effortlessly installing ESP32-Marauder firmware. Designed with a sleek web interface, it transforms
+        firmware flashing into a fast, hassle-free experience, empowering your devices for cutting-edge network security
+        and testing adventures.
+      </p>
+    </div>
+
     <fieldset>
-      <legend>1.12.1 T-Display Marauder</legend>
-      <select id="select-1.12.1">
-        <option value="" selected disabled>Choose below</option>
-        <option value="T-Display_Marauder_1.12.1">1.12.1 Marauder</option>
+      <legend>Select Firmware</legend>
+      <select id="firmware-select">
+        <option value="" selected disabled>Choose firmware below</option>
+        <option value="T-Display_Marauder_1.12.0">TTGO T-Display - Marauder v1.12.0</option>
+        <option value="T-Display_Marauder_1.12.1">TTGO T-Display - Marauder v1.12.1</option>
+        <option value="T-Display_Marauder_1.12.3">TTGO T-Display - Marauder v1.12.3</option>
       </select>
     </fieldset>
+
     <p class="button-row" align="center">
       <esp-web-install-button class="invisible"></esp-web-install-button>
     </p>
   </center>
+
   <script>
-    document.getElementById('select-1.12.1').addEventListener('change', (event) => {
-      const button = document.querySelector('esp-web-install-button');
+    const firmwareSelect = document.getElementById('firmware-select');
+    const button = document.querySelector('esp-web-install-button');
+
+    firmwareSelect.addEventListener('change', (event) => {
       button.manifest = `web/manifest_${event.target.value}.json`;
       button.classList.remove('invisible');
     });
 
     // Visitor counter
-    window.addEventListener('DOMContentLoaded', (event) => {
+    window.addEventListener('DOMContentLoaded', () => {
       if (localStorage.getItem('page_view_count')) {
         localStorage.setItem('page_view_count', Number(localStorage.getItem('page_view_count')) + 1);
       } else {
@@ -130,6 +138,7 @@
       document.getElementById('visitor-counter').innerText = `Visitor count: ${localStorage.getItem('page_view_count')}`;
     });
   </script>
+
   <div class="footer">
     ✨ <a href="https://github.com/ATOMNFT/Marauder-T-display-TTGO" style="color:#00FFFF;">T-display</a> &mdash;
     Installer powered by &mdash; <a href="https://esphome.github.io/esp-web-tools/" style="color:#00FFFF;"> ESP Web Tools</a> 🛠️
