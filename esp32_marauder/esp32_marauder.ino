@@ -1,5 +1,5 @@
 /* FLASH SETTINGS
-Board: LOLIN D32 (For ESP32_C3_SM use ESP32C3 Dev Module. For MARAUDER_TTGO_TDISPLAY use LOLIN D32. For MARAUDER_S2MINI use LOLIN S2 Mini)
+Board: LOLIN D32 (For ESP32_C3_SM use ESP32C3 Dev Module. For MARAUDER_TTGO_TDISPLAY use LOLIN D32. For MARAUDER_S2MINI use LOLIN S2 Mini with USB CDC on Boot Disabled)
 For MARAUDER_S2MINI: USB CDC on boot (disabled). In conjunction with line 275 below
 Flash Frequency: 80MHz
 Partition Scheme: Minimal SPIFFS
@@ -99,10 +99,6 @@ bool buttonHeld = false;
 
 #if defined(HAS_SD) && !defined(HAS_C5_SD)
   SDInterface sd_obj;
-#endif
-
-#ifdef MARAUDER_M5STICKC
-  AXP192 axp192_obj;
 #endif
 
 #ifdef HAS_FLIPPER_LED
@@ -235,10 +231,6 @@ uint32_t currentTime  = 0;
 
 void setup()
 {
-  #if defined(MARAUDER_TTGO_TDISPLAY)
-    pinMode(D_BTN, INPUT_PULLUP); // Configure button as input for deep sleep TTGO Tdisplay
-  #endif
-
   randomSeed(esp_random());
   
   #ifndef DEVELOPER
@@ -249,10 +241,13 @@ void setup()
     esp_spiram_init();
   #endif
 
-  //------------------------------ Edited for new boards --------------------------------------------------------------------------
+  #if defined(MARAUDER_TTGO_TDISPLAY)
+    pinMode(D_BTN, INPUT_PULLUP); // Configure button as input for deep sleep TTGO Tdisplay
+  #endif
+
   #ifdef ESP32_C3_SM
     //Serial.begin(115200);
-    Serial.begin(115200, SERIAL_8N1, 21, 20); // RX = GPIO21, TX = GPIO20 for ESP32C3SuperMini
+    //Serial.begin(115200, SERIAL_8N1, 21, 20); // RX = GPIO21, TX = GPIO20 for ESP32C3SuperMini
   #elif defined(MARAUDER_S2MINI)
     Serial.begin(115200, SERIAL_8N1, 17, 18); // RX = GPIO17, TX = GPIO18 // modified by Davide Gatti www.survivalhacking.it to work with Wemos S2 MINI board
   #else
@@ -260,16 +255,18 @@ void setup()
   #endif
   //  Serial.begin(115200);  
 
+  #ifdef HAS_ACT_LED
+    pinMode(ACT_LED_PIN, OUTPUT);
+    delay(100);
+    digitalWrite(ACT_LED_PIN, LOW);
+  #endif
+
   while(!Serial)
     delay(10);
 
   #ifdef HAS_C5_SD
     sharedSPI.begin(SD_SCK, SD_MISO, SD_MOSI);
     delay(100);
-  #endif
-
-  #ifdef defined(MARAUDER_M5STICKC) && !defined(MARAUDER_M5STICKCP2)
-    axp192_obj.begin();
   #endif
 
   #if defined(MARAUDER_M5STICKCP2) // Prevent StickCP2 from turning off when disconnect USB cable
@@ -282,9 +279,10 @@ void setup()
   #endif
   
   backlightOff();
-  #if BATTERY_ANALOG_ON == 1
-    pinMode(BATTERY_PIN, OUTPUT);
-    pinMode(CHARGING_PIN, INPUT);
+  
+  #if BATTERY_ANALOG_ON == 1 && !defined(MARAUDER_TTGO_TDISPLAY)
+      pinMode(BATTERY_PIN, OUTPUT);
+      pinMode(CHARGING_PIN, INPUT);
   #endif
   
   // Preset SPI CS pins to avoid bus conflicts

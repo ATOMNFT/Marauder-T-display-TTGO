@@ -34,15 +34,16 @@
   //#define MARAUDER_CARDPUTER_ADV
   //#define MARAUDER_V8
   //#define MARAUDER_MINI_V3
+  //#define MARAUDER_M5_NANO_C6
   //#define DUAL_MINI_C5
-  //#define ESP32_C3_SM             // (For ESP32_C3_SM use ESP32C3 Dev Module under board settings)
+  // ================================ CUSTOM BOARDS ================================
+  //#define MARAUDER_S2MINI         // (For ESP32 S2 Mini Wemos use LOLIN S2 Mini with USB CDC on Boot Disabled under board settings)
   #define MARAUDER_TTGO_TDISPLAY  // (For TTGO T-Display use LOLIN D32 under board settings)
-  //#define MARAUDER_S2MINI         // (For ESP32 S2 Mini Wemos use LOLIN S2 Mini under board settings)
   //// END BOARD TARGETS
 
   #define JSON_SETTING_SIZE 2048
 
-  #define MARAUDER_VERSION "v1.12.1"
+  #define MARAUDER_VERSION "v1.12.3"
 
   #define GRAPH_REFRESH   100
 
@@ -109,12 +110,12 @@
     #define HARDWARE_NAME "Marauder Mini v3"
   #elif defined(DUAL_MINI_C5)
     #define HARDWARE_NAME "Dual Mini C5"
-  #elif defined(ESP32_C3_SM)  //--------------------------------- New Boards Below --------------------------------------------------------------------------------------------
-    #define HARDWARE_NAME "SM ESP32 C3"
-  #elif defined(MARAUDER_TTGO_TDISPLAY)
-    #define HARDWARE_NAME "TTGO T-Display"
+  #elif defined(MARAUDER_M5_NANO_C6)
+    #define HARDWARE_NAME "M5 Nano C6"
   #elif defined(MARAUDER_S2MINI)
     #define HARDWARE_NAME "FlipperZero_S2MINI"
+  #elif defined(MARAUDER_TTGO_TDISPLAY)
+    #define HARDWARE_NAME "TTGO T-Display"
   #else
     #define HARDWARE_NAME "ESP32"
   #endif
@@ -130,6 +131,11 @@
     //#define FLIPPER_ZERO_HAT
     #define HAS_MINI_KB
     #define HAS_BATTERY
+      #if defined(MARAUDER_M5STICKC)
+        #define HAS_AXP192
+      #else
+        #define HAS_TP4057
+      #endif
     #define HAS_BT
     #define HAS_BUTTONS
     //#define HAS_NEOPIXEL_LED
@@ -243,6 +249,7 @@
     #define HAS_TOUCH
     //#define FLIPPER_ZERO_HAT
     #define HAS_BATTERY
+      #define HAS_IP5306
     #define HAS_BT
     //#define HAS_BUTTONS
     #define HAS_NEOPIXEL_LED
@@ -262,6 +269,7 @@
     #define HAS_TOUCH
     //#define FLIPPER_ZERO_HAT
     #define HAS_BATTERY
+      #define HAS_IP5306
     #define HAS_BT
     #define HAS_BT_REMOTE
     #define HAS_BUTTONS
@@ -512,6 +520,7 @@
     //#define HAS_TEMP_SENSOR
     #define HAS_NIMBLE_2
     #define HAS_IDF_3
+    #define HAS_ACT_LED
   #endif
 
   #ifdef MARAUDER_MINI_V3
@@ -538,47 +547,26 @@
     //#define HAS_SIMPLEX_DISPLAY
   #endif
 
-  #ifdef ESP32_C3_SM  // Custom Boards ---------------------------------------------------------------------------------------------------------------
+  #if defined(MARAUDER_M5_NANO_C6)
     //#define FLIPPER_ZERO_HAT
-    #define HAS_MINI_KB
+    //#define HAS_MINI_KB
     //#define HAS_BATTERY
     #define HAS_BT
-    #define HAS_BUTTONS
+    //#define HAS_BUTTONS
     #define HAS_NEOPIXEL_LED
     //#define HAS_PWR_MGMT
-    #define HAS_SCREEN
-    #define HAS_MINI_SCREEN
-    //#define HAS_FULL_SCREEN
-    #define HAS_SD
-    #define USE_SD
+    //#define HAS_SCREEN
+    //#define HAS_MINI_SCREEN
+    //#define HAS_SD
+    //#define USE_SD
     //#define HAS_TEMP_SENSOR
-    //#define HAS_NIMBLE_2
-    //#define HAS_GPS  //check lines 1579 & 1628 in MenuFunctions.cpp
-  #endif
-
-  #ifdef MARAUDER_TTGO_TDISPLAY
-    //#define FLIPPER_ZERO_HAT
-    //#define HAS_FLIPPER_LED
-    #define HAS_MINI_KB
-    #define HAS_BATTERY
-    #define BATTERY_ANALOG_ON 1
-    #define BATTERY_PIN 34  // GPIO34 is standard for battery voltage on TTGO T-Display
-    #define RESET_FONT display_obj.tft.setFreeFont(NULL)
-    #define HAS_BT
-    #define HAS_BUTTONS
-    //#define HAS_NEOPIXEL_LED
-    #define HAS_PWR_MGMT
-    #define HAS_SCREEN
-    #define HAS_MINI_SCREEN
-    #define HAS_SD
-    #define USE_SD
-    //#define HAS_TEMP_SENSOR
+    //#define HAS_GPS
     #define HAS_NIMBLE_2
-    //#define HAS_GPS  // If using GPS check lines 1610, 2147, 2207 in MenuFunctions.cpp
+    #define HAS_IDF_3
   #endif
 
   #ifdef MARAUDER_S2MINI
-    //#define HAS_FLIPPER_LED
+    #define HAS_FLIPPER_LED
     //#define FLIPPER_ZERO_HAT
     //#define HAS_BATTERY
     //#define HAS_BT
@@ -591,12 +579,33 @@
     #define USE_SD
     #define HAS_PSRAM
     //#define HAS_TEMP_SENSOR
-  #endif  // End Custom Boards --------------------------------------------------------------------------------------------------------------
+  #endif
+
+  #ifdef MARAUDER_TTGO_TDISPLAY
+    //#define FLIPPER_ZERO_HAT
+    //#define HAS_FLIPPER_LED
+    #define HAS_MINI_KB
+    #define HAS_BATTERY
+    //#define BATTERY_ANALOG_ON 1
+    #define BATTERY_PIN 34  // GPIO34 is standard for battery voltage on TTGO T-Display
+    #define RESET_FONT display_obj.tft.setFreeFont(NULL)
+    #define HAS_BT
+    #define HAS_BUTTONS
+    //#define HAS_NEOPIXEL_LED
+    //#define HAS_PWR_MGMT
+    #define HAS_SCREEN
+    #define HAS_MINI_SCREEN
+    #define HAS_SD
+    #define USE_SD
+    //#define HAS_TEMP_SENSOR
+    #define HAS_NIMBLE_2
+    //#define HAS_GPS  // If using GPS check lines 1610, 2147, 2207 in MenuFunctions.cpp
+  #endif
   //// END BOARD FEATURES
 
   //// POWER MANAGEMENT
   #ifdef HAS_PWR_MGMT
-    #if defined(MARAUDER_M5STICKC) || defined(MARAUDER_M5STICKCP2)
+    #if defined(HAS_AXP192)
       #include "AXP192.h"
     #endif
 
@@ -870,26 +879,6 @@
         #define R_BTN 8
         #define D_BTN 9
       #endif
-
-      #define HAS_L
-      #define HAS_R
-      #define HAS_U
-      #define HAS_D
-      #define HAS_C
-
-      #define L_PULL true
-      #define C_PULL true
-      #define U_PULL true
-      #define R_PULL true
-      #define D_PULL true
-    #endif
-
-    #ifdef ESP32_C3_SM  // Edit these pins to match the GPIO pins of board. Set for 5way joystick
-      #define L_BTN 0
-      #define C_BTN 1
-      #define U_BTN 4
-      #define R_BTN 8
-      #define D_BTN 9
 
       #define HAS_L
       #define HAS_R
@@ -2094,82 +2083,6 @@
       #define STATUSBAR_COLOR 0x4A49
     #endif
 
-    #ifdef ESP32_C3_SM  //------------------------- Edit these pins to match the display GPIO pins (No display at this time. Use with flipper zero) ----------------------------------------------
-      #define CHAN_PER_PAGE 7
-
-      #define SCREEN_CHAR_WIDTH 40
-      #define HAS_ST7789  // Added 240x240 ST7789 display
-      #define TFT_MISO 5
-      #define TFT_MOSI 6
-      #define TFT_SCLK 4
-      #define TFT_CS -1
-      #define TFT_DC 1
-      #define TFT_RST 2
-      //#define TFT_BL 10
-      //#define TOUCH_CS -1
-      #define SD_CS 3
-
-      #define SCREEN_BUFFER
-
-      #define MAX_SCREEN_BUFFER 9
-
-      #define BANNER_TEXT_SIZE 1
-
-      #ifndef TFT_WIDTH
-        #define TFT_WIDTH 240
-      #endif
-
-      #ifndef TFT_HEIGHT
-        #define TFT_HEIGHT 240
-      #endif
-
-      #define GRAPH_VERT_LIM TFT_HEIGHT/2
-
-      #define EXT_BUTTON_WIDTH 0
-
-      #define SCREEN_ORIENTATION 1
-
-      #define CHAR_WIDTH 6
-      #define SCREEN_WIDTH TFT_HEIGHT // Originally 240
-      #define SCREEN_HEIGHT TFT_WIDTH // Originally 320
-      #define HEIGHT_1 TFT_WIDTH
-      #define WIDTH_1 TFT_WIDTH
-      #define STANDARD_FONT_CHAR_LIMIT (TFT_WIDTH/6) // number of characters on a single line with normal font
-      #define TEXT_HEIGHT (TFT_HEIGHT/10) // Height of text to be printed and scrolled
-      #define BOT_FIXED_AREA 0 // Number of lines in bottom fixed area (lines counted from bottom of screen)
-      #define TOP_FIXED_AREA 48 // Number of lines in top fixed area (lines counted from top of screen)
-      #define YMAX TFT_HEIGHT // Bottom of screen area
-      #define minimum(a,b)     (((a) < (b)) ? (a) : (b))
-      //#define MENU_FONT NULL
-      #define MENU_FONT &FreeMono9pt7b // Winner
-      //#define MENU_FONT &FreeMonoBold9pt7b
-      //#define MENU_FONT &FreeSans9pt7b
-      //#define MENU_FONT &FreeSansBold9pt7b
-      #define BUTTON_SCREEN_LIMIT 6
-      #define BUTTON_ARRAY_LEN 100
-      #define STATUS_BAR_WIDTH (TFT_HEIGHT/16)
-      #define LVGL_TICK_PERIOD 6
-    
-      #define FRAME_X 100
-      #define FRAME_Y 64
-      #define FRAME_W 120
-      #define FRAME_H 50
-    
-      // Red zone size
-      #define REDBUTTON_X FRAME_X
-      #define REDBUTTON_Y FRAME_Y
-      #define REDBUTTON_W (FRAME_W/2)
-      #define REDBUTTON_H FRAME_H
-    
-      // Green zone size
-      #define GREENBUTTON_X (REDBUTTON_X + REDBUTTON_W)
-      #define GREENBUTTON_Y FRAME_Y
-      #define GREENBUTTON_W (FRAME_W/2)
-      #define GREENBUTTON_H FRAME_H
-    
-      #define STATUSBAR_COLOR 0x4A49
-    #endif
-
     #ifdef MARAUDER_TTGO_TDISPLAY  // Edit these pins to match the display GPIO pins
       #define CHAN_PER_PAGE 7
       
@@ -2529,24 +2442,6 @@
     #define BUTTON_PADDING 10
   #endif
 
-  #ifdef ESP32_C3_SM  // Added for ESP32_C3_SM--------------------------------------------------------------------------
-    #define BANNER_TIME 50
-    
-    #define COMMAND_PREFIX "!"
-    
-    // Keypad start position, key sizes and spacing
-    #define KEY_X (TFT_WIDTH/2) // Centre of key
-    #define KEY_Y (TFT_HEIGHT/4.5)
-    #define KEY_W TFT_WIDTH // Width and height
-    #define KEY_H (TFT_HEIGHT/12.8)
-    #define KEY_SPACING_X 0 // X and Y gap
-    #define KEY_SPACING_Y 1
-    #define KEY_TEXTSIZE 1   // Font size multiplier
-    #define ICON_W 22
-    #define ICON_H 22
-    #define BUTTON_PADDING 10
-  #endif
-
   #ifdef MARAUDER_TTGO_TDISPLAY
     #define BANNER_TIME 50
     
@@ -2661,17 +2556,13 @@
       #define SD_CS 10
     #endif
 
-    #ifdef ESP32_C3_SM  //------------------------------ Added for ESP32_C3_SM --------------------------------------------
-      #define SD_CS 3
+    #ifdef MARAUDER_S2MINI  
+      #define SD_CS 10
     #endif
 
     #ifdef MARAUDER_TTGO_TDISPLAY  
       #define SD_CS 33
     #endif  
-
-    #ifdef MARAUDER_S2MINI  
-      #define SD_CS 10
-    #endif
 
   #endif
   //// END SD DEFINITIONS
@@ -2776,11 +2667,11 @@
     #define MEM_LOWER_LIM 10000
   #elif defined(MARAUDER_MINI_V3)
     #define MEM_LOWER_LIM 10000
-  #elif defined(ESP32_C3_SM)  //------------------------------ Added for ESP32_C3_SM --------------------------------------------
+  #elif defined(MARAUDER_S2MINI)
     #define MEM_LOWER_LIM 10000
   #elif defined(MARAUDER_TTGO_TDISPLAY)
     #define MEM_LOWER_LIM 10000
-  #elif defined(MARAUDER_S2MINI)
+  #else
     #define MEM_LOWER_LIM 10000
   #endif
   //// END MEMORY LOWER LIMIT STUFF
@@ -2806,8 +2697,8 @@
       #define PIN 27
     #elif defined(MARAUDER_CARDPUTER_ADV)
       #define PIN 21
-    #elif defined(ESP32_C3_SM)  //------------------------------ Added for ESP32_C3_SM --------------------------------------------
-      #define PIN 8
+    #elif defined(MARAUDER_M5_NANO_C6)
+      #define PIN 20
     #else
       #define PIN 25
     #endif
@@ -2923,18 +2814,14 @@
       #define GPS_SERIAL_INDEX 1
       #define GPS_TX 14
       #define GPS_RX 13
-    #elif defined(ESP32_C3_SM)  //------------------------------ Added for ESP32_C3_SM. Edit these pins to match the GPIO pins --------------------------------------------
-      #define GPS_SERIAL_INDEX 1
-      #define GPS_TX 6
-      #define GPS_RX 9
-    #elif defined(MARAUDER_TTGO_TDISPLAY)  // Edit these pins to match the GPIO pins
-      #define GPS_SERIAL_INDEX 1
-      #define GPS_TX 6
-      #define GPS_RX 9
     #elif defined(MARAUDER_S2MINI)  // Edit these pins to match the GPIO pins
       #define GPS_SERIAL_INDEX 1
       #define GPS_TX 9
       #define GPS_RX 21
+    #elif defined(MARAUDER_TTGO_TDISPLAY)  // Edit these pins to match the GPIO pins
+      #define GPS_SERIAL_INDEX 1
+      #define GPS_TX 6
+      #define GPS_RX 9
     #endif
   #else
     #define mac_history_len 100
@@ -2945,77 +2832,97 @@
   //// BATTERY STUFF
   #ifdef HAS_BATTERY
 
-    #ifdef MARAUDER_V4
+    #if defined(MARAUDER_M5STICKC) || defined(MARAUDER_M5STICKCP2) 
       #define I2C_SDA 33
       #define I2C_SCL 22
-    #endif
 
-    #ifdef MARAUDER_V6
+    #elif defined(MARAUDER_V4) || defined(MARAUDER_V6) || defined(MARAUDER_V6_1) || defined(MARAUDER_KIT)
       #define I2C_SDA 33
       #define I2C_SCL 22
-    #endif
+      #define HAS_IP5306
 
-    #ifdef MARAUDER_V6_1
-      #define I2C_SDA 33
-      #define I2C_SCL 22
-    #endif
-
-    #ifdef MARAUDER_M5STICKC
-      #define I2C_SDA 33
-      #define I2C_SCL 22
-    #endif
-
-    #ifdef MARAUDER_KIT
-      #define I2C_SDA 33
-      #define I2C_SCL 22
-    #endif
-
-    #ifdef MARAUDER_MINI
+    #elif defined(MARAUDER_MINI)
       #define I2C_SDA 33
       #define I2C_SCL 26
-    #endif
 
-    #ifdef MARAUDER_V7
+    #elif defined(MARAUDER_V7)
       #define I2C_SDA 33
       #define I2C_SCL 16
-    #endif
+      #define HAS_IP5306
 
-    #ifdef MARAUDER_V7_1
+    #elif defined(MARAUDER_V7_1)
       #define I2C_SDA 33
       #define I2C_SCL 27
-    #endif
 
-    #ifdef MARAUDER_CYD_MICRO
+    #elif defined(MARAUDER_CYD_MICRO)
       #define I2C_SDA 22
       #define I2C_SCL 27
-    #endif
 
-    #ifdef MARAUDER_CYD_2USB
+    #elif defined(MARAUDER_CYD_2USB)
       #define I2C_SDA 22
       #define I2C_SCL 27
-    #endif
 
-    #ifdef MARAUDER_CYD_3_5_INCH
+    #elif defined(MARAUDER_CYD_3_5_INCH)
       #define I2C_SDA 32
       #define I2C_SCL 25
-    #endif
 
-    #ifdef MARAUDER_CYD_GUITION
+    #elif defined(MARAUDER_CYD_GUITION)
       #define I2C_SDA 22
       #define I2C_SCL 21
-    #endif
 
-    #ifdef MARAUDER_V8
+    #elif defined(MARAUDER_V8)
       #define I2C_SCL 4
       #define I2C_SDA 5
-    #endif
 
-    #ifdef MARAUDER_TTGO_TDISPLAY
+    #elif defined(MARAUDER_TTGO_TDISPLAY)
       #define I2C_SDA 33
       #define I2C_SCL 27
+
+    #elif defined(MARAUDER_REV_FEATHER)
+      #define I2C_SCL 4
+      #define I2C_SDA 3
+      #define HAS_MAX1704X
+      #undef HAS_AXP2101
+      #undef HAS_IP5306
     #endif
 
-  #endif
+    //  If we know what we have, we can delete what we're not using
+    #ifdef BATTERY_ADC_PIN
+      #undef HAS_AXP2101
+      #undef HAS_IP5306
+      #undef HAS_MAX1704X
+      #undef HAS_AXP192
+
+    // No driver for this LiPo charger
+    #elif defined(HAS_TP4057)
+      #undef HAS_AXP2101
+      #undef HAS_IP5306
+      #undef HAS_MAX1704X
+      #undef HAS_AXP192
+
+    #elif defined(HAS_IP5306)
+      #undef HAS_AXP2101
+      #undef HAS_MAX1704X
+      #undef HAS_AXP192
+
+    #elif defined(HAS_AXP192)
+      #undef HAS_AXP2101
+      #undef HAS_IP5306
+      #undef HAS_MAX1704X
+
+    #elif defined(HAS_AXP2101)
+      #undef HAS_IP5306
+      #undef HAS_MAX1704X
+
+
+    #else       // punt
+       // #define HAS_AXP2101
+       #define HAS_IP5306
+       #define HAS_MAX1704X
+       #define HAS_AXP192
+    #endif
+
+  #endif  // HAS_BATTERY
 
   //// MARAUDER TITLE STUFF
   #ifdef MARAUDER_V4
@@ -3046,11 +2953,9 @@
     #define MARAUDER_TITLE_BYTES 13578
   #elif defined(MARAUDER_MINI_V3)
     #define MARAUDER_TITLE_BYTES 13578
-  #elif defined(ESP32_C3_SM)                //------------------------------ Added for ESP32_C3_SM --------------------------------------------
+  #elif defined(MARAUDER_S2MINI)
     #define MARAUDER_TITLE_BYTES 13578
   #elif defined(MARAUDER_TTGO_TDISPLAY)
-    #define MARAUDER_TITLE_BYTES 13578
-  #elif defined(MARAUDER_S2MINI)
     #define MARAUDER_TITLE_BYTES 13578
   #else
     #define MARAUDER_TITLE_BYTES 13578
@@ -3198,6 +3103,12 @@
       #define G_PIN 16
       #define R_PIN 4
     #endif
+
+    #ifdef MARAUDER_S2MINI
+      #define B_PIN 4
+      #define G_PIN 5
+      #define R_PIN 6
+    #endif
   #endif
 
   //// END FUNNY FLIPPER LED STUFF
@@ -3209,4 +3120,14 @@
   #else
     #define HOP_DELAY 250
   #endif
+
+  //// ACT LED STUFF
+  #ifdef HAS_ACT_LED
+
+    #ifdef MARAUDER_V8
+      #define ACT_LED_PIN 28
+    #endif
+
+  #endif
+
 #endif

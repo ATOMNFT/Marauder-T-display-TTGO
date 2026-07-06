@@ -1,9 +1,12 @@
+
+// #ifdef HAS_BATTERY
+
 #include "BatteryInterface.h"
 #include "lang_var.h"
 #include <driver/adc.h>  // Added for MARAUDER_TTGO_TDISPLAY
 #include "esp_adc_cal.h" // Added for MARAUDER_TTGO_TDISPLAY
 BatteryInterface::BatteryInterface() {
-  
+
 }
 
 void BatteryInterface::main(uint32_t currentTime) {
@@ -29,44 +32,57 @@ void BatteryInterface::RunSetup() {
   #ifdef HAS_BATTERY
 
     #ifdef BATTERY_ADC_PIN
-      analogReadResolution(12);
-      pinMode(BATTERY_ADC_PIN, INPUT);
-      this->has_adc_battery = true;
-      this->i2c_supported = true;
-      Serial.println(F("Battery: ADC mode"));
-    #elif !defined(HAS_AXP2101)
-      Wire.begin(I2C_SDA, I2C_SCL);
+        analogReadResolution(12);
+        pinMode(BATTERY_ADC_PIN, INPUT);
+        this->has_adc_battery = true;
+        // this->i2c_supported = true;
+        Serial.println(F("Battery: ADC mode"));
 
-      Wire.beginTransmission(IP5306_ADDR);
-      error = Wire.endTransmission();
+    #elif defined(HAS_AXP2101) && defined(I2C_SDA)
+        bool result = this->power.begin(Wire, AXP2101_SLAVE_ADDRESS, I2C_SDA, I2C_SCL);
 
-      if (error == 0) {
-        Serial.println(F("Detected IP5306"));
-        this->has_ip5306 = true;
+        if (!result)
+          return;
+
+        Serial.println(F("Detected AXP2101"));
+
         this->i2c_supported = true;
-      }
+        this->has_axp2101 = true;
 
-      Wire.beginTransmission(MAX17048_ADDR);
-      error = Wire.endTransmission();
+    #elif defined(I2C_SDA)  // other i2c (shared)
 
-      if (error == 0) {
-        if (maxlipo.begin()) {
-          Serial.println(F("Detected MAX17048"));
-          this->has_max17048 = true;
-          this->i2c_supported = true;
-        }
-      }
-    #else
-      bool result = this->power.begin(Wire, AXP2101_SLAVE_ADDRESS, I2C_SDA, I2C_SCL);
+        Wire.begin(I2C_SDA, I2C_SCL);
 
-      if (!result)
-        return;
+        #ifdef HAS_IP5306
+          Wire.beginTransmission(IP5306_ADDR);
+          error = Wire.endTransmission();
 
-      Serial.println(F("Detected AXP2101"));
+          if (error == 0) {
+            Serial.println(F("Detected IP5306"));
+            this->has_ip5306 = true;
+            this->i2c_supported = true;
+          }
+        #endif
 
-      this->i2c_supported = true;
-      this->has_axp2101 = true;
-    #endif
+        #ifdef HAS_AXP192
+            axp192_obj.begin();
+        #endif
+
+
+        #ifdef HAS_MAX1704X
+          Wire.beginTransmission(MAX17048_ADDR);
+          error = Wire.endTransmission();
+
+          if (error == 0) {
+            if (maxlipo.begin()) {
+              Serial.println(F("Detected MAX17048"));
+              this->has_max17048 = true;
+              this->i2c_supported = true;
+            }
+          }
+        #endif
+
+  #endif //  other i2c
 
     #ifdef MARAUDER_TTGO_TDISPLAY
       adc1_config_width(ADC_WIDTH_BIT_12);
@@ -75,56 +91,62 @@ void BatteryInterface::RunSetup() {
     #endif
 
     this->initTime = millis();
-  #endif
+  #endif // HAS_BATTERY
 }
 
 int8_t BatteryInterface::getBatteryLevel() {
 
-  #ifdef BATTERY_ADC_PIN
-    if (this->has_adc_battery) {
-      int voltage_mv = analogReadMilliVolts(BATTERY_ADC_PIN) * 2; // voltage divider ratio 2:1
-      if (voltage_mv <= 3300) return 0;
-      if (voltage_mv >= 4150) return 100;
-      return (int8_t)(((voltage_mv - 3300) * 100) / 850);
-    }
-  #endif
+  #ifdef HAS_BATTERY
 
-  if (this->has_ip5306) {
-    Wire.beginTransmission(IP5306_ADDR);
-    Wire.write(0x78);
-    if (Wire.endTransmission(false) == 0 &&
-        Wire.requestFrom(IP5306_ADDR, 1)) {
-      this->i2c_supported = true;
-      switch (Wire.read() & 0xF0) {
-        case 0xE0: return 25;
-        case 0xC0: return 50;
-        case 0x80: return 75;
-        case 0x00: return 100;
-        default: return 0;
+    #ifdef BATTERY_ADC_PIN
+      if (this->has_adc_battery) {
+        int voltage_mv = analogReadMilliVolts(BATTERY_ADC_PIN) * 2; // voltage divider ratio 2:1
+        if (voltage_mv <= 3300) return 0;
+        if (voltage_mv >= 4150) return 100;
+        return (int8_t)(((voltage_mv - 3300) * 100) / 850);
       }
-    }
-    this->i2c_supported = false;
-    return -1;
-  }
+    #endif
+
+    #ifdef HAS_IP5306
+      if (this->has_ip5306) {
+        Wire.beginTransmission(IP5306_ADDR);
+        Wire.write(0x78);
+        if (Wire.endTransmission(false) == 0 &&
+            Wire.requestFrom(IP5306_ADDR, 1)) {
+          this->i2c_supported = true;
+          switch (Wire.read() & 0xF0) {
+            case 0xE0: return 25;
+            case 0xC0: return 50;
+            case 0x80: return 75;
+            case 0x00: return 100;
+            default: return 0;
+          }
+        }
+        this->i2c_supported = false;
+        return -1;
+      }
+    #endif
 
 
-  if (this->has_max17048) {
-    float percent = this->maxlipo.cellPercent();
+    #ifdef HAS_MAX1704X
+      if (this->has_max17048) {
+        float percent = this->maxlipo.cellPercent();
 
-    // Sometimes we dumb
-    if (percent >= 100)
-      return 100;
-    else if (percent <= 0)
-      return 0;
-    else
-      return percent;
-  }
+        // Sometimes we dumb
+        if (percent >= 100)
+          return 100;
+        else if (percent <= 0)
+          return 0;
+        else
+          return percent;
+      }
+    #endif
 
-  #ifdef HAS_AXP2101
-    if (this->has_axp2101) {
-      return this->power.getBatteryPercent();
-    }
-  #endif
+    #ifdef HAS_AXP2101
+      if (this->has_axp2101) {
+        return this->power.getBatteryPercent();
+      }
+    #endif
 
   // ============================================================
   // === Added MARAUDER_TTGO_TDISPLAY Battery Level Block Here ===
@@ -141,32 +163,34 @@ int8_t BatteryInterface::getBatteryLevel() {
     else return 0;
   #endif
 
+  #endif // HAS_BATTERY
+
   return -1;
 }
 
 // =================================================================
 // === Added full MARAUDER_TTGO_TDISPLAY ADC voltage read function ===
 // =================================================================
-#ifdef MARAUDER_TTGO_TDISPLAY
-float BatteryInterface::readBatteryVoltage() {
-  uint32_t raw = 0;
-  const int samples = 20;
+  #ifdef MARAUDER_TTGO_TDISPLAY
+  float BatteryInterface::readBatteryVoltage() {
+    uint32_t raw = 0;
+    const int samples = 20;
 
-  for (int i = 0; i < samples; i++) {
-    raw += adc1_get_raw(ADC1_CHANNEL_6);  // GPIO 34
-    delay(2);
+    for (int i = 0; i < samples; i++) {
+      raw += adc1_get_raw(ADC1_CHANNEL_6);  // GPIO 34
+      delay(2);
+    }
+
+    raw /= samples;
+    uint32_t voltage_mv = esp_adc_cal_raw_to_voltage(raw, &adc_chars);  // calibrated mV
+    float battery_voltage = (voltage_mv / 1000.0) * 2.02;  // Adjust as needed
+
+    Serial.print("Raw ADC: ");
+    Serial.println(raw);
+    Serial.print("Calibrated voltage: ");
+    Serial.print(battery_voltage);
+    Serial.println(" V");
+
+    return battery_voltage;
   }
-
-  raw /= samples;
-  uint32_t voltage_mv = esp_adc_cal_raw_to_voltage(raw, &adc_chars);  // calibrated mV
-  float battery_voltage = (voltage_mv / 1000.0) * 2.02;  // Adjust as needed
-
-  Serial.print("Raw ADC: ");
-  Serial.println(raw);
-  Serial.print("Calibrated voltage: ");
-  Serial.print(battery_voltage);
-  Serial.println(" V");
-
-  return battery_voltage;
-}
-#endif
+  #endif

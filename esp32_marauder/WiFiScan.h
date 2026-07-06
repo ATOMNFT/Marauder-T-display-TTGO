@@ -68,6 +68,9 @@
   #include "LedInterface.h"
 #endif
 
+//#include <WiFiClientSecure.h>
+//#include "mbedtls/sha256.h"
+
 #define bad_list_length 3
 
 #define OTA_UPDATE 100
@@ -300,6 +303,8 @@ class WiFiScan
     // Settings
     uint mac_history_cursor = 0;
     uint8_t channel_hop_delay = 1;
+
+    //WiFiClientSecure *client = new WiFiClientSecure();
   
     int x_pos; //position along the graph x axis
     float y_pos_x; //current graph y axis position of X value
@@ -585,6 +590,9 @@ class WiFiScan
       NimBLEAdvertisementData GetUniversalAdvertisementData(EBLEPayloadType type);
     #endif
 
+    bool wigleUpload(String filePath);
+    bool wdgwarsUpload(String filePath);
+
     void throwThatShitInACircle();
     void displayTargetFilter();
     void displayTransmitRate();
@@ -621,9 +629,9 @@ class WiFiScan
     void executeBLESpam(EBLEPayloadType type);
     void startWardriverWiFi();
     void saeAttackLoop(uint32_t currentTime);
-    String processPwnagotchiBeacon(const uint8_t* frame, int length);
+    void processPwnagotchiBeacon(const uint8_t* frame, int length);
 
-    void startWiFiAttacks(uint8_t scan_mode, uint16_t color, String title_string);
+    void startWiFiAttacks(uint8_t scan_mode, uint16_t color, const char* title_string);
 
     void signalAnalyzerLoop(uint32_t tick);
     void channelActivityLoop(uint32_t tick);
@@ -922,9 +930,9 @@ class WiFiScan
     void tagPOI(const char* label = nullptr);
 
     bool save_serial = false;
-    void startPcap(String file_name);
-    void startLog(String file_name);
-    void startGPX(String file_name);
+    void startPcap(const char* file_name);
+    void startLog(const char* file_name);
+    void startGPX(const char* file_name);
 
     static WiFiEventId_t eventId;
     static String lastClientMAC;

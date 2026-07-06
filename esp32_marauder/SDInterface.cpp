@@ -21,7 +21,7 @@ bool SDInterface::initSD() {
     pinMode(SD_CS, OUTPUT);
 
     delay(10);
-      #if (defined(MARAUDER_M5STICKC)) || (defined(HAS_CYD_TOUCH)) || (defined(MARAUDER_CARDPUTER)) || (defined(MARAUDER_CARDPUTER_ADV)) || defined(MARAUDER_TTGO_TDISPLAY)
+    #if (defined(MARAUDER_M5STICKC)) || (defined(HAS_CYD_TOUCH)) || (defined(MARAUDER_CARDPUTER)) || (defined(MARAUDER_CARDPUTER_ADV)) || defined(MARAUDER_TTGO_TDISPLAY)
       /* Set up SPI SD Card using external pin header
       StickCPlus Header - SPI SD Card Reader
                   3v3   -   3v3
@@ -33,10 +33,10 @@ bool SDInterface::initSD() {
       */
       #if defined(MARAUDER_M5STICKC)
         enum { SPI_SCK = 0, SPI_MISO = 36, SPI_MOSI = 26 };
-      #elif defined(MARAUDER_TTGO_TDISPLAY)
-        enum { SPI_SCK = 25, SPI_MISO = 36, SPI_MOSI = 26 };  // TTGO T-Display pins
       #elif defined(MARAUDER_S2MINI)
         enum { SPI_SCK = 36, SPI_MISO = 37, SPI_MOSI = 35 };  // S2 Mini pins
+      #elif defined(MARAUDER_TTGO_TDISPLAY)
+        enum { SPI_SCK = 25, SPI_MISO = 36, SPI_MOSI = 26 };  // TTGO T-Display pins
       #elif defined(HAS_CYD_TOUCH) || defined(MARAUDER_CARDPUTER) || defined(MARAUDER_CARDPUTER_ADV) || defined(HAS_SEPARATE_SD)
         enum { SPI_SCK = SD_SCK, SPI_MISO = SD_MISO, SPI_MOSI = SD_MOSI };
       #else
