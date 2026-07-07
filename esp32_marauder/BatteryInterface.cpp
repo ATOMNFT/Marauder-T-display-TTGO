@@ -194,3 +194,4 @@ int8_t BatteryInterface::getBatteryLevel() {
     return battery_voltage;
   }
   #endif
+  

@@ -253,7 +253,7 @@ void setup()
   #else
     Serial.begin(115200);
   #endif
-  //  Serial.begin(115200);  
+  //  Serial.begin(115200);
 
   #ifdef HAS_ACT_LED
     pinMode(ACT_LED_PIN, OUTPUT);
@@ -279,7 +279,6 @@ void setup()
   #endif
   
   backlightOff();
-  
   #if BATTERY_ANALOG_ON == 1 && !defined(MARAUDER_TTGO_TDISPLAY)
       pinMode(BATTERY_PIN, OUTPUT);
       pinMode(CHARGING_PIN, INPUT);
@@ -333,7 +332,7 @@ void setup()
     backlightOff();
   #endif
 
-   #ifdef HAS_SCREEN
+  #ifdef HAS_SCREEN
     #ifdef MARAUDER_TTGO_TDISPLAY
       // --- Custom TTGO T-Display Splash ---
       display_obj.tft.drawCentreString("ESP32 Marauder", TFT_WIDTH / 1.1, TFT_HEIGHT * 0.10, 1);
@@ -448,7 +447,7 @@ void setup()
 
 
 void loop()
-{
+{ 
   // Deep sleep section
   static unsigned long buttonPressStart = 0; 
   static bool buttonHeld = false;
